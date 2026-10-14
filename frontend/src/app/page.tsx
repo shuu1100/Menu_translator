@@ -38,7 +38,7 @@ const PHASES = [
   { id: 2, name: "VLM Inference & Extraction", status: "completed" },
   { id: 3, name: "Backend Contracts & Pipeline", status: "completed" },
   { id: 4, name: "SQLite & Hybrid RAG", status: "completed" },
-  { id: 5, name: "Translation & Allergen Safety", status: "upcoming" },
+  { id: 5, name: "Translation & Allergen Safety", status: "completed" },
   { id: 6, name: "Dataset Creation & Fine-Tuning", status: "upcoming" },
   { id: 7, name: "PWA Camera & BBox Overlays", status: "upcoming" },
   { id: 8, name: "Integration & Offline Mode", status: "upcoming" },

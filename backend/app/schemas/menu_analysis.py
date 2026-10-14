@@ -28,6 +28,7 @@ class EvidenceStatus(str, Enum):
     CONFIRMED = "confirmed"      # Sourced directly from verified recipe database
     POSSIBLE = "possible"        # Sourced from printed description on physical menu
     UNVERIFIED = "unverified"    # Machine generated; unverified by authoritative culinary records
+    NOT_LISTED = "not_listed"    # Available record does not list it; NOT proof of absence
     UNKNOWN = "unknown"          # Inconclusive or absent evidence
 
 
@@ -60,13 +61,21 @@ class AllergenWarning(BaseModel):
     allergen: str = Field(description="Identified allergen (e.g. gluten, dairy, nuts, shellfish)")
     status: EvidenceStatus = Field(
         default=EvidenceStatus.UNVERIFIED,
-        description="Evidence status: confirmed, possible, unverified, unknown",
+        description="Evidence status: confirmed, possible, unverified, not_listed, unknown",
     )
     source: str = Field(
         default="unverified_extraction",
         description="Source of finding: recipe_record, printed_menu, unverified_inference",
     )
     notes: Optional[str] = None
+    icon: Optional[str] = Field(
+        default=None,
+        description="Accessibility icon name (e.g. alert-triangle, shield-alert, info)",
+    )
+    severity: str = Field(
+        default="warning",
+        description="Severity: critical (contains), warning (may_contain/unknown), advisory (not_listed)",
+    )
 
 
 class AnalyzedDish(BaseModel):

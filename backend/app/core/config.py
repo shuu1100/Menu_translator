@@ -1,7 +1,7 @@
 """Application configuration using Pydantic Settings."""
 
 from functools import lru_cache
-from typing import List
+from typing import List, Optional
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -43,6 +43,18 @@ class Settings(BaseSettings):
     inference_timeout_seconds: int = Field(
         default=300,
         description="Timeout for model inference requests in seconds",
+    )
+    translation_model: Optional[str] = Field(
+        default=None,
+        description="Model to use for translation/enrichment (defaults to vision_model if None)",
+    )
+    translation_temperature: float = Field(
+        default=0.1,
+        description="Sampling temperature for contextual translation (0.0 to 0.2)",
+    )
+    translation_timeout_seconds: int = Field(
+        default=30,
+        description="Timeout for translation generation in seconds",
     )
 
     # Database & Storage
