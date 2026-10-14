@@ -1,0 +1,31 @@
+[
+  {
+    "id": "menu_sample_01",
+    "name": "Trattoria Della Nonna",
+    "cuisine": "Italian",
+    "language": "it",
+    "description": "Traditional northern Italian dinner menu featuring regional pasta dishes, house cured meats, and homemade desserts.",
+    "verified_allergens": ["gluten", "dairy", "eggs", "nuts"],
+    "sample_dishes": [
+      {
+        "original_name": "Tagliatelle al Ragù Bolognese",
+        "category": "Primi",
+        "inferred_ingredients": ["tagliatelle pasta", "beef and pork ragu", "parmigiano reggiano"],
+        "known_allergens": {
+          "gluten": "confirmed",
+          "dairy": "confirmed",
+          "eggs": "confirmed"
+        }
+      },
+      {
+        "original_name": "Panna Cotta ai Frutti di Bosco",
+        "category": "Dolci",
+        "inferred_ingredients": ["heavy cream", "sugar", "gelatin", "wild berries"],
+        "known_allergens": {
+          "dairy": "confirmed",
+          "gluten": "unknown"
+        }
+      }
+    ]
+  }
+]
