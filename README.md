@@ -144,6 +144,7 @@ npm run build
 
 ## 📊 Evaluation & Benchmark Reports
 
+- **[10_model_selection_quick_reference.md](10_model_selection_quick_reference.md)**: Hardware-specific recommendations, Ollama setup commands, and VLM comparison criteria.
 - **[docs/dataset-card.md](docs/dataset-card.md)**: Dataset source inventory, licenses, language coverage, and synthetic corpus (`mt-synth-v1`) documentation.
 - **[docs/model-card.md](docs/model-card.md)**: Base model architecture, safety boundaries, intended/unintended uses, and rollback criteria.
 - **[docs/baseline-evaluation-report.md](docs/baseline-evaluation-report.md)**: Measured metrics on frozen test set ($1.00$ IoU, $0.00$ CER, $100\%$ Price Association, $0.00\%$ False-Safe Rate).
