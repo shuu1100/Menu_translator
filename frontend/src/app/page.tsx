@@ -39,7 +39,7 @@ const PHASES = [
   { id: 3, name: "Backend Contracts & Pipeline", status: "completed" },
   { id: 4, name: "SQLite & Hybrid RAG", status: "completed" },
   { id: 5, name: "Translation & Allergen Safety", status: "completed" },
-  { id: 6, name: "Dataset Creation & Fine-Tuning", status: "upcoming" },
+  { id: 6, name: "Dataset Creation & Fine-Tuning", status: "completed" },
   { id: 7, name: "PWA Camera & BBox Overlays", status: "upcoming" },
   { id: 8, name: "Integration & Offline Mode", status: "upcoming" },
   { id: 9, name: "QA, Demo & Hacktoberfest Release", status: "upcoming" },
@@ -116,7 +116,7 @@ export default function Home() {
               <h1 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
                 Menu Translator
                 <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded-md bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-                  Phase 3 Ready
+                  Phase 6 Ready (Eval & Dataset)
                 </span>
               </h1>
               <p className="text-xs text-slate-400">
