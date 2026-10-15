@@ -27,7 +27,12 @@ class Settings(BaseSettings):
     host: str = Field(default="127.0.0.1", description="Server host")
     port: int = Field(default=8000, description="Server port")
     cors_origins: List[str] = Field(
-        default=["http://localhost:3000", "http://127.0.0.1:3000"],
+        default=[
+            "http://localhost:3000",
+            "http://127.0.0.1:3000",
+            "http://localhost:3001",
+            "http://127.0.0.1:3001",
+        ],
         description="Allowed CORS origins",
     )
 
@@ -95,6 +100,14 @@ class Settings(BaseSettings):
     image_max_dimension: int = Field(
         default=1024,
         description="Max width/height dimension to resize images before processing",
+    )
+    max_concurrent_requests: int = Field(
+        default=4,
+        description="Maximum concurrent pipeline inference requests",
+    )
+    pipeline_timeout_seconds: int = Field(
+        default=120,
+        description="Maximum overall timeout for end-to-end menu analysis pipeline in seconds",
     )
 
 

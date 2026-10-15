@@ -24,6 +24,7 @@ import { MenuCanvasOverlay } from "../components/MenuCanvasOverlay";
 import { DishDetailDrawer } from "../components/DishDetailDrawer";
 import { OfflineBanner } from "../components/OfflineBanner";
 import { SAMPLE_MENUS } from "../data/sample_menus";
+import { apiClient } from "../services/apiClient";
 
 interface ServiceInfo {
   status: "ok" | "healthy" | "degraded" | "error" | "offline";
@@ -49,7 +50,7 @@ const PHASES = [
   { id: 5, name: "Translation & Allergen Safety", status: "completed" },
   { id: 6, name: "Dataset Creation & Fine-Tuning", status: "completed" },
   { id: 7, name: "PWA Camera & BBox Overlays", status: "completed" },
-  { id: 8, name: "Integration & Offline Mode", status: "upcoming" },
+  { id: 8, name: "Integration & Offline Mode", status: "completed" },
   { id: 9, name: "QA, Demo & Hacktoberfest Release", status: "upcoming" },
 ];
 
@@ -74,11 +75,8 @@ export default function Home() {
 
   const fetchHealth = useCallback(async () => {
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
-      const res = await fetch(`${apiUrl}/health`, { cache: "no-store" });
-      if (!res.ok) throw new Error(`Health check returned HTTP ${res.status}`);
-      const data: HealthData = await res.json();
-      setHealth(data);
+      const data = await apiClient.getHealth();
+      setHealth(data as HealthData);
     } catch {
       setHealth(null);
     }
@@ -88,12 +86,8 @@ export default function Home() {
     let active = true;
     const initCheck = async () => {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
-        const res = await fetch(`${apiUrl}/health`, { cache: "no-store" });
-        if (res.ok && active) {
-          const data: HealthData = await res.json();
-          setHealth(data);
-        }
+        const data = await apiClient.getHealth();
+        if (active) setHealth(data as HealthData);
       } catch {
         if (active) setHealth(null);
       }
@@ -123,33 +117,19 @@ export default function Home() {
     setCurrentImageUrl(objectUrl);
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("target_language", targetLanguage);
-
-      userRestrictions.forEach((r) => {
-        formData.append("dietary_restrictions", r);
+      const result = await apiClient.analyzeMenu({
+        file,
+        targetLanguage,
+        dietaryRestrictions: userRestrictions,
       });
 
-      const response = await fetch(`${apiUrl}/api/v1/menus/analyze`, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(
-          errorData.detail?.message || `Server responded with HTTP ${response.status}`
-        );
-      }
-
-      const result: MenuAnalysisResponse = await response.json();
       setAnalysisResult(result);
       setSelectedDish(result.dishes[0] || null);
       setActiveScreen("results");
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : "Failed to analyze menu.";
+      const msg =
+        (err as { message?: string })?.message ||
+        (err instanceof Error ? err.message : "Failed to analyze menu.");
       setErrorMessage(
         `${msg} (Tip: You can also explore pre-loaded demo menus below without live inference).`
       );

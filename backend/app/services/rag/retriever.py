@@ -56,6 +56,7 @@ class CulinaryRetriever:
             else settings.retrieval_confidence_threshold
         )
         self.max_vector_distance = max_vector_distance
+        self._embedding_cache: Dict[str, bytes] = {}
 
     def _is_accessible_to_restaurant(
         self, dish_restaurant_id: Optional[str], target_restaurant_id: Optional[str]
@@ -144,8 +145,17 @@ class CulinaryRetriever:
             return []
 
         try:
-            query_vector = self.embedding_provider.embed_text(query)
-            query_bytes = serialize_float32(query_vector)
+            cache_key = query.strip().lower()
+            if cache_key in self._embedding_cache:
+                query_bytes = self._embedding_cache[cache_key]
+            else:
+                query_vector = self.embedding_provider.embed_text(query)
+                query_bytes = serialize_float32(query_vector)
+                # Keep cache bounded to 1024 entries
+                if len(self._embedding_cache) >= 1024:
+                    self._embedding_cache.pop(next(iter(self._embedding_cache)))
+                self._embedding_cache[cache_key] = query_bytes
+
             k_candidates = limit * 3
 
             sql = """

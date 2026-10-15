@@ -63,6 +63,22 @@ class InvalidImageError(AppException):
         )
 
 
+class ServerOverloadedError(AppException):
+    """Raised when concurrent request capacity is exceeded."""
+
+    def __init__(
+        self,
+        message: str = "Server is currently experiencing high load. Please retry shortly.",
+        details: Optional[Dict[str, Any]] = None,
+    ):
+        super().__init__(
+            message=message,
+            code="SERVER_OVERLOADED",
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            details=details,
+        )
+
+
 def register_exception_handlers(app: FastAPI) -> None:
     """Register application-wide exception handlers."""
 

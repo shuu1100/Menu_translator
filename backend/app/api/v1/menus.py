@@ -1,5 +1,4 @@
-"""Menu analysis and ingestion API endpoints."""
-
+import asyncio
 import json
 from typing import List, Optional
 from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile, status
@@ -10,6 +9,7 @@ from backend.app.core.exceptions import (
     InvalidImageError,
     ModelInferenceError,
     ModelServiceUnavailableError,
+    ServerOverloadedError,
 )
 from backend.app.schemas.menu_analysis import (
     MenuAnalysisResponse,
@@ -20,6 +20,19 @@ from backend.app.services.vision.ollama_provider import OllamaVisionProvider
 from backend.app.services.vision.provider import MenuVisionProvider
 
 router = APIRouter(prefix="/menus", tags=["Menus"])
+
+_pipeline_concurrency_lock = asyncio.Lock()
+_pipeline_semaphore: Optional[asyncio.Semaphore] = None
+
+
+async def get_pipeline_semaphore(settings: Settings) -> asyncio.Semaphore:
+    """Return bounded concurrency semaphore singleton."""
+    global _pipeline_semaphore
+    if _pipeline_semaphore is None:
+        async with _pipeline_concurrency_lock:
+            if _pipeline_semaphore is None:
+                _pipeline_semaphore = asyncio.Semaphore(settings.max_concurrent_requests)
+    return _pipeline_semaphore
 
 
 def get_vision_provider(settings: Settings = Depends(get_settings)) -> MenuVisionProvider:
@@ -120,17 +133,34 @@ async def analyze_menu(
         else:
             restrictions_list = [r.strip() for r in cleaned.split(",") if r.strip()]
 
-    # 5. Execute Pipeline with mapped exceptions
+    # 5. Acquire bounded concurrency semaphore to prevent overload
+    sem = await get_pipeline_semaphore(settings)
     try:
-        response = await orchestrator.run_pipeline(
-            image_bytes=image_bytes,
-            mime_type=file.content_type,
-            target_language=lang_enum,
-            user_dietary_restrictions=restrictions_list,
-            restaurant_id=restaurant_id,
-            apply_clahe=apply_clahe,
+        await asyncio.wait_for(sem.acquire(), timeout=5.0)
+    except asyncio.TimeoutError:
+        raise ServerOverloadedError(
+            f"Server capacity reached ({settings.max_concurrent_requests} concurrent analysis jobs active). Please retry shortly."
+        )
+
+    # 6. Execute Pipeline with mapped exceptions and timeout
+    try:
+        response = await asyncio.wait_for(
+            orchestrator.run_pipeline(
+                image_bytes=image_bytes,
+                mime_type=file.content_type,
+                target_language=lang_enum,
+                user_dietary_restrictions=restrictions_list,
+                restaurant_id=restaurant_id,
+                apply_clahe=apply_clahe,
+            ),
+            timeout=float(settings.pipeline_timeout_seconds),
         )
         return response
+    except asyncio.TimeoutError:
+        raise HTTPException(
+            status_code=status.HTTP_504_GATEWAY_TIMEOUT,
+            detail={"code": "PIPELINE_TIMEOUT", "message": f"Pipeline execution exceeded {settings.pipeline_timeout_seconds}s limit."},
+        )
     except ModelServiceUnavailableError:
         raise
     except ModelInferenceError as err:
@@ -147,3 +177,5 @@ async def analyze_menu(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail={"code": "PIPELINE_ERROR", "message": f"Internal pipeline error: {str(e)}"},
         )
+    finally:
+        sem.release()
