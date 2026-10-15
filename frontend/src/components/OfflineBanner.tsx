@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useState, useEffect } from "react";
+import React, { useSyncExternalStore } from "react";
 import { WifiOff, AlertTriangle, RefreshCw } from "lucide-react";
 
 interface OfflineBannerProps {
@@ -9,28 +7,49 @@ interface OfflineBannerProps {
   onRefresh?: () => void;
 }
 
+function subscribeOnline(callback: () => void) {
+  if (typeof window === "undefined") return () => {};
+  window.addEventListener("online", callback);
+  window.addEventListener("offline", callback);
+  return () => {
+    window.removeEventListener("online", callback);
+    window.removeEventListener("offline", callback);
+  };
+}
+
+function getOnlineSnapshot(): boolean {
+  return typeof navigator !== "undefined" && typeof navigator.onLine === "boolean"
+    ? navigator.onLine
+    : true;
+}
+
+function getServerSnapshot(): boolean {
+  return true;
+}
+
+function getClientMounted(): boolean {
+  return true;
+}
+
+function getServerMounted(): boolean {
+  return false;
+}
+
 export const OfflineBanner: React.FC<OfflineBannerProps> = ({
   backendReachable = true,
   modelReady = true,
   onRefresh,
 }) => {
-  const [isOnline, setIsOnline] = useState(() =>
-    typeof navigator !== "undefined" ? navigator.onLine : true
-  );
+  const isMounted = useSyncExternalStore(subscribeOnline, getClientMounted, getServerMounted);
+  const isOnline = useSyncExternalStore(subscribeOnline, getOnlineSnapshot, getServerSnapshot);
 
-  useEffect(() => {
-    const handleOnline = () => setIsOnline(true);
-    const handleOffline = () => setIsOnline(false);
+  // Avoid hydration mismatch while mounting on client
+  if (!isMounted) {
+    return null;
+  }
 
-    window.addEventListener("online", handleOnline);
-    window.addEventListener("offline", handleOffline);
-    return () => {
-      window.removeEventListener("online", handleOnline);
-      window.removeEventListener("offline", handleOffline);
-    };
-  }, []);
-
-  if (isOnline && backendReachable && modelReady) {
+  // When backend and local vision model are healthy, the local AI lens is fully operational
+  if (backendReachable && modelReady) {
     return null;
   }
 
@@ -40,28 +59,28 @@ export const OfflineBanner: React.FC<OfflineBannerProps> = ({
       className="w-full bg-amber-500/15 border-b border-amber-500/30 px-4 py-2.5 text-xs text-amber-200 flex items-center justify-between gap-3 shadow-sm backdrop-blur-md"
     >
       <div className="flex items-center gap-2">
-        {!isOnline ? (
+        {!backendReachable ? (
+          <>
+            <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+            <span>
+              <strong>Local Backend Offline:</strong> FastAPI backend is unreachable at port 8001. Ensure the server is running (`python -m uvicorn backend.app.main:app --port 8001`).
+            </span>
+          </>
+        ) : !modelReady ? (
+          <>
+            <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+            <span>
+              <strong>Local Vision Model Offline:</strong> Model `qwen3-vl:8b` is not ready. Ensure Ollama is running (`ollama run qwen3-vl:8b`).
+            </span>
+          </>
+        ) : !isOnline ? (
           <>
             <WifiOff className="w-4 h-4 text-amber-400 shrink-0" />
             <span>
-              <strong>Offline Mode Active:</strong> App shell is loaded from PWA cache. Live vision analysis requires network connectivity to your local Ollama server.
+              <strong>Offline Mode Active:</strong> App shell is loaded from PWA cache. Live vision analysis requires connectivity to your local Ollama server.
             </span>
           </>
-        ) : !backendReachable ? (
-          <>
-            <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
-            <span>
-              <strong>Local Backend Offline:</strong> FastAPI backend is unreachable at port 8000. You can explore pre-loaded sample menus in the meantime.
-            </span>
-          </>
-        ) : (
-          <>
-            <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
-            <span>
-              <strong>Local Vision Model Offline:</strong> Ensure Ollama is running (`ollama run qwen3-vl:8b`) for live camera menu extraction.
-            </span>
-          </>
-        )}
+        ) : null}
       </div>
 
       {onRefresh && (

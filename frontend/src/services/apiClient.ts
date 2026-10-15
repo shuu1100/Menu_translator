@@ -34,6 +34,7 @@ export class MenuTranslatorApiClient {
 
   /**
    * Check system health and service dependencies (DB, Ollama).
+   * Supports auto-discovery across candidate ports (8001, 8000, 127.0.0.1, localhost).
    */
   async getHealth(signal?: AbortSignal): Promise<{
     status: string;
@@ -43,21 +44,40 @@ export class MenuTranslatorApiClient {
       model_service?: { status: string; message: string };
     };
   }> {
-    const res = await fetch(`${this.baseUrl}/health`, {
-      method: "GET",
-      cache: "no-store",
-      signal,
-    });
+    const candidates = [this.baseUrl];
+    if (typeof window !== "undefined") {
+      const host = window.location.hostname || "127.0.0.1";
+      candidates.push(`http://${host}:8001`);
+      candidates.push("http://127.0.0.1:8001");
+      candidates.push("http://localhost:8001");
+      candidates.push("http://127.0.0.1:8000");
+      candidates.push("http://localhost:8000");
+    }
+    const uniqueCandidates = Array.from(new Set(candidates));
 
-    if (!res.ok) {
-      throw {
-        code: "HEALTH_CHECK_FAILED",
-        message: `Health check returned HTTP ${res.status}`,
-        status: res.status,
-      } as ApiClientError;
+    let lastError: unknown = null;
+    for (const candidate of uniqueCandidates) {
+      try {
+        const res = await fetch(`${candidate}/health`, {
+          method: "GET",
+          cache: "no-store",
+          signal,
+        });
+
+        if (res.ok) {
+          this.baseUrl = candidate;
+          return await res.json();
+        }
+      } catch (err) {
+        lastError = err;
+      }
     }
 
-    return res.json();
+    throw {
+      code: "HEALTH_CHECK_FAILED",
+      message: `Health check failed across all endpoints: ${lastError}`,
+      status: 503,
+    } as ApiClientError;
   }
 
   /**
