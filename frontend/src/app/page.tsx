@@ -51,7 +51,7 @@ const PHASES = [
   { id: 6, name: "Dataset Creation & Fine-Tuning", status: "completed" },
   { id: 7, name: "PWA Camera & BBox Overlays", status: "completed" },
   { id: 8, name: "Integration & Offline Mode", status: "completed" },
-  { id: 9, name: "QA, Demo & Hacktoberfest Release", status: "upcoming" },
+  { id: 9, name: "QA, Demo & Hacktoberfest Release", status: "completed" },
 ];
 
 export default function Home() {
@@ -180,8 +180,8 @@ export default function Home() {
           <div>
             <h1 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
               Menu Translator
-              <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded-md bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-                PWA Active
+              <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                v1.0.0 Release Ready
               </span>
             </h1>
             <p className="text-[11px] text-slate-400 hidden sm:block">
