@@ -56,28 +56,28 @@ export const OfflineBanner: React.FC<OfflineBannerProps> = ({
   return (
     <div
       role="alert"
-      className="w-full bg-amber-500/15 border-b border-amber-500/30 px-4 py-2.5 text-xs text-amber-200 flex items-center justify-between gap-3 shadow-sm backdrop-blur-md"
+      className="w-full bg-[#FCF5EB] border-b border-[#F0D6AF] px-4 py-2.5 text-xs text-[#9B6416] flex items-center justify-between gap-3 shadow-sm"
     >
       <div className="flex items-center gap-2">
         {!backendReachable ? (
           <>
-            <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+            <AlertTriangle className="w-4 h-4 text-[#9B6416] shrink-0" />
             <span>
-              <strong>Local Backend Offline:</strong> FastAPI backend is unreachable at port 8001. Ensure the server is running (`python -m uvicorn backend.app.main:app --port 8001`).
+              <strong className="font-bold">Local Backend Offline:</strong> FastAPI backend is unreachable at port 8001. Ensure the server is running (`python -m uvicorn backend.app.main:app --port 8001`).
             </span>
           </>
         ) : !modelReady ? (
           <>
-            <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+            <AlertTriangle className="w-4 h-4 text-[#9B6416] shrink-0" />
             <span>
-              <strong>Local Vision Model Offline:</strong> Model `qwen3-vl:8b` is not ready. Ensure Ollama is running (`ollama run qwen3-vl:8b`).
+              <strong className="font-bold">Local Vision Model Offline:</strong> Model `qwen3-vl:8b` is not ready. Ensure Ollama is running (`ollama run qwen3-vl:8b`).
             </span>
           </>
         ) : !isOnline ? (
           <>
-            <WifiOff className="w-4 h-4 text-amber-400 shrink-0" />
+            <WifiOff className="w-4 h-4 text-[#9B6416] shrink-0" />
             <span>
-              <strong>Offline Mode Active:</strong> App shell is loaded from PWA cache. Live vision analysis requires connectivity to your local Ollama server.
+              <strong className="font-bold">Offline Mode Active:</strong> App shell is loaded from PWA cache. Live vision analysis requires connectivity to your local Ollama server.
             </span>
           </>
         ) : null}
@@ -87,7 +87,7 @@ export const OfflineBanner: React.FC<OfflineBannerProps> = ({
         <button
           type="button"
           onClick={onRefresh}
-          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500/20 hover:bg-amber-500/30 text-amber-100 font-medium transition-colors shrink-0"
+          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#F2DFD3] hover:bg-[#EADFD5] text-[#1F1B18] font-semibold transition-colors shrink-0 border border-[#EADFD5]"
         >
           <RefreshCw className="w-3 h-3" />
           <span>Retry</span>

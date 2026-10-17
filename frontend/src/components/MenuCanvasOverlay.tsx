@@ -137,16 +137,96 @@ export const MenuCanvasOverlay: React.FC<MenuCanvasOverlayProps> = ({
     return { type: "unverified", text: "Unverified" };
   };
 
+  const renderDishBox = (dish: AnalyzedDish) => {
+    if (!geometry) return null;
+    const isSelected = selectedDish?.dish_id === dish.dish_id;
+    const status = getDishStatus(dish);
+
+    const left = dish.bounding_box.xmin * geometry.renderedWidth;
+    const top = dish.bounding_box.ymin * geometry.renderedHeight;
+    const width =
+      (dish.bounding_box.xmax - dish.bounding_box.xmin) * geometry.renderedWidth;
+    const height =
+      (dish.bounding_box.ymax - dish.bounding_box.ymin) * geometry.renderedHeight;
+
+    let borderStyle = "border-[#C74735] bg-[#C74735]/15 text-[#FFF8F5]";
+    let badgeBg = "bg-[#C74735] text-white";
+    let Icon = HelpCircle;
+
+    if (status.type === "conflict") {
+      borderStyle = "border-[#B3261E] bg-[#B3261E]/20 text-[#FFF8F5] shadow-[#B3261E]/20";
+      badgeBg = "bg-[#B3261E] text-white";
+      Icon = AlertTriangle;
+    } else if (status.type === "safe") {
+      borderStyle = "border-[#166742] bg-[#166742]/20 text-[#FFF8F5] shadow-[#166742]/20";
+      badgeBg = "bg-[#166742] text-white";
+      Icon = CheckCircle2;
+    } else if (status.type === "unverified") {
+      borderStyle = "border-[#9B6416] bg-[#9B6416]/20 text-[#FFF8F5] shadow-[#9B6416]/15";
+      badgeBg = "bg-[#9B6416] text-white";
+      Icon = HelpCircle;
+    }
+
+    if (isSelected) {
+      borderStyle += " ring-2 ring-[#C74735] ring-offset-2 ring-offset-[#1F1B18]";
+    }
+
+    return (
+      <button
+        key={dish.dish_id}
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          onSelectDish(dish);
+        }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onSelectDish(dish);
+          }
+        }}
+        style={{
+          position: "absolute",
+          left: `${left}px`,
+          top: `${top}px`,
+          width: `${Math.max(width, 32)}px`,
+          height: `${Math.max(height, 28)}px`,
+        }}
+        aria-label={`Dish ${dish.reading_order}: ${dish.translated_title || dish.original_text}. Price: ${dish.price || "not listed"}. Status: ${status.text}.`}
+        className={`pointer-events-auto border-2 rounded-xl transition-all duration-150 cursor-pointer shadow-md flex flex-col justify-between p-1.5 focus:outline-none hover:scale-[1.01] ${borderStyle}`}
+      >
+        {/* Header badge inside box */}
+        <div className="flex items-center justify-between w-full pointer-events-none gap-1">
+          <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[10px] font-bold tracking-tight shadow-sm ${badgeBg}`}>
+            <Icon className="w-2.5 h-2.5" />
+            <span>#{dish.reading_order}</span>
+          </span>
+
+          {dish.price && (
+            <span className="px-1.5 py-0.5 rounded-md text-[10px] font-extrabold bg-[#1F1B18]/85 text-[#F2DFD3] backdrop-blur-sm border border-[#EADFD5]/20">
+              {dish.price}
+            </span>
+          )}
+        </div>
+
+        {/* Translated title label bar */}
+        <div className="w-full truncate text-[11px] font-semibold text-white bg-[#1F1B18]/85 backdrop-blur-sm px-1.5 py-0.5 rounded-md mt-auto text-left shadow-sm">
+          {dish.translated_title || dish.original_text}
+        </div>
+      </button>
+    );
+  };
+
   return (
-    <div className="relative w-full h-[65vh] sm:h-[75vh] bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 shadow-2xl flex flex-col select-none">
+    <div className="relative w-full h-[65vh] sm:h-[75vh] bg-[#1F1B18] rounded-2xl overflow-hidden border border-[#EADFD5] shadow-xl flex flex-col select-none">
       {/* Zoom / Navigation Toolbar */}
-      <div className="absolute top-4 right-4 z-30 flex items-center gap-1.5 bg-slate-900/90 backdrop-blur-md border border-slate-800 p-1.5 rounded-xl shadow-lg">
+      <div className="absolute top-4 right-4 z-30 flex items-center gap-1.5 bg-[#FFF8F5]/90 backdrop-blur-md border border-[#EADFD5] p-1.5 rounded-xl shadow-lg">
         <button
           type="button"
           onClick={handleZoomIn}
           title="Zoom In"
           aria-label="Zoom in menu"
-          className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+          className="p-1.5 rounded-lg text-[#1F1B18] hover:bg-[#F2DFD3] transition-colors"
         >
           <ZoomIn className="w-4 h-4" />
         </button>
@@ -155,7 +235,7 @@ export const MenuCanvasOverlay: React.FC<MenuCanvasOverlayProps> = ({
           onClick={handleZoomOut}
           title="Zoom Out"
           aria-label="Zoom out menu"
-          className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+          className="p-1.5 rounded-lg text-[#1F1B18] hover:bg-[#F2DFD3] transition-colors"
         >
           <ZoomOut className="w-4 h-4" />
         </button>
@@ -164,11 +244,11 @@ export const MenuCanvasOverlay: React.FC<MenuCanvasOverlayProps> = ({
           onClick={handleResetZoom}
           title="Reset View"
           aria-label="Reset zoom and position"
-          className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+          className="p-1.5 rounded-lg text-[#1F1B18] hover:bg-[#F2DFD3] transition-colors"
         >
           <RotateCcw className="w-4 h-4" />
         </button>
-        <div className="text-[10px] font-mono font-medium text-slate-400 px-2">
+        <div className="text-[10px] font-mono font-medium text-[#70645C] px-2">
           {Math.round(zoomLevel * 100)}%
         </div>
       </div>
@@ -186,7 +266,7 @@ export const MenuCanvasOverlay: React.FC<MenuCanvasOverlayProps> = ({
             onSelectDish(null);
           }
         }}
-        className={`relative w-full h-full flex items-center justify-center overflow-hidden bg-slate-950 ${
+        className={`relative w-full h-full flex items-center justify-center overflow-hidden bg-[#1F1B18] ${
           zoomLevel > 1.0 ? "cursor-grab active:cursor-grabbing" : "cursor-default"
         }`}
       >
@@ -220,86 +300,7 @@ export const MenuCanvasOverlay: React.FC<MenuCanvasOverlayProps> = ({
               }}
               className="pointer-events-none"
             >
-              {dishes.map((dish) => {
-                const isSelected = selectedDish?.dish_id === dish.dish_id;
-                const status = getDishStatus(dish);
-
-                const left = dish.bounding_box.xmin * geometry.renderedWidth;
-                const top = dish.bounding_box.ymin * geometry.renderedHeight;
-                const width =
-                  (dish.bounding_box.xmax - dish.bounding_box.xmin) *
-                  geometry.renderedWidth;
-                const height =
-                  (dish.bounding_box.ymax - dish.bounding_box.ymin) *
-                  geometry.renderedHeight;
-
-                let borderStyle = "border-indigo-400/80 bg-indigo-500/10 text-indigo-300";
-                let badgeBg = "bg-indigo-600 text-white";
-                let Icon = HelpCircle;
-
-                if (status.type === "conflict") {
-                  borderStyle = "border-rose-500 bg-rose-500/20 text-rose-300 shadow-rose-500/20";
-                  badgeBg = "bg-rose-600 text-white";
-                  Icon = AlertTriangle;
-                } else if (status.type === "safe") {
-                  borderStyle = "border-emerald-400 bg-emerald-500/15 text-emerald-300 shadow-emerald-500/20";
-                  badgeBg = "bg-emerald-600 text-white";
-                  Icon = CheckCircle2;
-                } else if (status.type === "unverified") {
-                  borderStyle = "border-amber-400/90 bg-amber-500/10 text-amber-300 shadow-amber-500/15";
-                  badgeBg = "bg-amber-600 text-white";
-                  Icon = HelpCircle;
-                }
-
-                if (isSelected) {
-                  borderStyle += " ring-2 ring-white ring-offset-2 ring-offset-slate-900";
-                }
-
-                return (
-                  <button
-                    key={dish.dish_id}
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onSelectDish(dish);
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        onSelectDish(dish);
-                      }
-                    }}
-                    style={{
-                      position: "absolute",
-                      left: `${left}px`,
-                      top: `${top}px`,
-                      width: `${Math.max(width, 32)}px`,
-                      height: `${Math.max(height, 28)}px`,
-                    }}
-                    aria-label={`Dish ${dish.reading_order}: ${dish.translated_title || dish.original_text}. Price: ${dish.price || "not listed"}. Status: ${status.text}.`}
-                    className={`pointer-events-auto border-2 rounded-xl transition-all duration-150 cursor-pointer shadow-md flex flex-col justify-between p-1.5 focus:outline-none hover:scale-[1.01] ${borderStyle}`}
-                  >
-                    {/* Header badge inside box */}
-                    <div className="flex items-center justify-between w-full pointer-events-none gap-1">
-                      <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[10px] font-bold tracking-tight shadow-sm ${badgeBg}`}>
-                        <Icon className="w-2.5 h-2.5" />
-                        <span>#{dish.reading_order}</span>
-                      </span>
-
-                      {dish.price && (
-                        <span className="px-1.5 py-0.5 rounded-md text-[10px] font-extrabold bg-slate-950/80 text-amber-300 backdrop-blur-sm border border-slate-700/80">
-                          {dish.price}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Translated title label bar */}
-                    <div className="w-full truncate text-[11px] font-semibold text-white bg-slate-950/75 backdrop-blur-sm px-1.5 py-0.5 rounded-md mt-auto text-left shadow-sm">
-                      {dish.translated_title || dish.original_text}
-                    </div>
-                  </button>
-                );
-              })}
+              {dishes.map((dish) => renderDishBox(dish))}
             </div>
           )}
         </div>

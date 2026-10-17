@@ -1,7 +1,7 @@
 // Service Worker for Menu Translator PWA
 // Caches only safe static assets (app shell, styles, icons). Never caches private user menu photos.
 
-const CACHE_NAME = "menu-translator-shell-v2";
+const CACHE_NAME = "menu-translator-shell-v4";
 const STATIC_ASSETS = [
   "/",
   "/manifest.webmanifest",
@@ -38,10 +38,11 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
 
-  // Never cache backend API calls (/api/*, /health) or dynamic blob/image uploads
+  // Never cache backend API calls, Next.js / Turbopack chunks, or non-GET requests
   if (
     url.pathname.startsWith("/api/") ||
     url.pathname.startsWith("/health") ||
+    url.pathname.startsWith("/_next/") ||
     event.request.method !== "GET"
   ) {
     return;

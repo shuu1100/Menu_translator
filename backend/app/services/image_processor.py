@@ -12,7 +12,7 @@ from backend.app.schemas.extraction import BoundingBox
 
 # Maximum allowed uncompressed pixel count (30 Megapixels) to prevent decompression bombs
 MAX_PIXELS_ALLOWED = 30_000_000
-ALLOWED_IMAGE_FORMATS = {"JPEG", "PNG", "WEBP"}
+ALLOWED_IMAGE_FORMATS = {"JPEG", "PNG", "WEBP", "MPO"}
 
 
 @dataclass
@@ -38,9 +38,10 @@ class ImageProcessor:
         image_bytes: bytes,
         max_size_mb: int = 15,
         max_pixels: int = MAX_PIXELS_ALLOWED,
+        rotation: int = 0,
     ) -> Image.Image:
         """
-        Validate image bytes, MIME type, payload limits, and correct EXIF orientation.
+        Validate image bytes, MIME type, payload limits, EXIF orientation, and optional manual rotation.
         Returns a clean PIL.Image in RGB mode.
         """
         if not image_bytes:
@@ -62,10 +63,19 @@ class ImageProcessor:
         stream.seek(0)
         img = Image.open(stream)
 
-        if img.format not in ALLOWED_IMAGE_FORMATS:
+        fmt = getattr(img, "format", "") or ""
+        if fmt.upper() not in ALLOWED_IMAGE_FORMATS:
             raise InvalidImageError(
-                f"Unsupported image format: {img.format}. Allowed: {', '.join(ALLOWED_IMAGE_FORMATS)}"
+                f"Unsupported image format: {fmt}. Allowed: {', '.join(sorted(ALLOWED_IMAGE_FORMATS))}"
             )
+
+        # For MPO (multi-frame JPEG container from smartphone dual cameras/portrait mode),
+        # ensure primary frame 0 is selected
+        if fmt.upper() == "MPO":
+            try:
+                img.seek(0)
+            except Exception:
+                pass
 
         # Protect against decompression bomb exploits
         pixel_count = img.width * img.height
@@ -76,13 +86,27 @@ class ImageProcessor:
 
         # Correct orientation based on EXIF tag
         try:
-            img = ImageOps.exif_transpose(img)
+            transposed = ImageOps.exif_transpose(img)
+            if transposed is not None:
+                img = transposed
         except Exception:
             pass  # Fallback gracefully if EXIF is unreadable
 
-        # Convert to RGB (strips alpha channel if PNG, converts CMYK to RGB)
+        # Apply user-specified manual rotation (in degrees clockwise: 90, 180, 270)
+        norm_rot = int(rotation) % 360
+        if norm_rot == 90:
+            img = img.transpose(Image.Transpose.ROTATE_270)
+        elif norm_rot == 180:
+            img = img.transpose(Image.Transpose.ROTATE_180)
+        elif norm_rot == 270:
+            img = img.transpose(Image.Transpose.ROTATE_90)
+
+        # Convert to RGB (strips alpha channel if PNG, converts CMYK to RGB, detaches MPO frame)
         if img.mode != "RGB":
             img = img.convert("RGB")
+        else:
+            # Ensure image data is loaded in memory
+            img.load()
 
         return img
 

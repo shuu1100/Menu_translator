@@ -12,7 +12,10 @@ export type SupportedLanguage =
   | "ar"
   | "it"
   | "pt"
-  | "ko";
+  | "ko"
+  | "hi"
+  | "ru"
+  | "zh-CN";
 
 export type EvidenceStatus =
   | "confirmed"
@@ -54,25 +57,66 @@ export interface AllergenWarning {
 
 export interface AnalyzedDish {
   dish_id: string;
+  id?: string | null;
   reading_order: number;
   section?: string | null;
+  category?: string | null;
+  section_original?: string | null;
+  section_translated?: string | null;
   bounding_box: BoundingBox;
   original_text: string;
+  original_name?: string | null;
+  original_description?: string | null;
   phonetic_transcription?: string | null;
+  transliteration?: string | null;
   translated_title: string;
+  translated_name?: string | null;
   culinary_description?: string | null;
+  translated_description?: string | null;
+  generated_description?: string | null;
+  tags?: string[];
   flavor_profile?: string | null;
-  key_ingredients: string[];
-  allergen_warnings: AllergenWarning[];
-  dietary_compatibility: DietaryCompatibility;
   price?: string | null;
+  price_text_original?: string | null;
+  price_value?: number | null;
   currency?: string | null;
+  price_currency?: string | null;
+  key_ingredients: string[];
+  ingredients_original?: string[];
+  ingredients_translated?: string[];
+  ingredients_verified?: string[];
+  ingredient_evidence_status?: EvidenceStatus;
+  allergen_warnings: AllergenWarning[];
+  allergens?: AllergenWarning[];
+  nutrition?: Record<string, unknown> | null;
+  dietary_compatibility: DietaryCompatibility;
+  dietary_evidence?: Record<string, string>;
+  confidence?: number | null;
+  source_evidence?: string | null;
   evidence_status: EvidenceStatus;
+  representative_image?: DishImageInfo | null;
+}
+
+export interface DishImageInfo {
+  image_url: string;
+  thumbnail_url?: string | null;
+  source: string;
+  photographer?: string | null;
+  photographer_url?: string | null;
+  source_url?: string | null;
+  alt_text: string;
+  relevance_score: number;
+  is_fallback: boolean;
+  status: "available" | "unavailable" | "error" | "loading";
+  query_used?: string | null;
+  dish_category?: string | null;
+  photo_id?: string | null;
 }
 
 export interface StageTiming {
   stage: string;
   duration_ms: number;
+  request_id?: string | null;
 }
 
 export interface ExtractionWarning {

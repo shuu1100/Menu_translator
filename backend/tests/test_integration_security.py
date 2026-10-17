@@ -44,6 +44,7 @@ class MockIntegrationVisionProvider(MenuVisionProvider):
         mime_type: str,
         metadata: Optional[Dict[str, Any]] = None,
         apply_clahe: bool = False,
+        rotation: int = 0,
     ) -> MenuExtractionResult:
         if self.should_fail:
             raise ModelServiceUnavailableError("Ollama inference engine is offline")

@@ -108,6 +108,7 @@ class MenuExtractionResult(BaseModel):
     warnings: List[ExtractionWarning] = Field(default_factory=list, description="Extraction warnings")
     processing_time_ms: float = Field(ge=0.0, description="Total pipeline latency in milliseconds")
     model_name: str = Field(description="Vision model used for extraction")
+    metadata: Dict[str, Any] = Field(default_factory=dict, description="Fine-grained stage timings and hardware telemetry")
 
     # Safety Notice: extraction NEVER outputs allergen or health claims
     safety_notice: str = Field(

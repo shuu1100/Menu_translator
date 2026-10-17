@@ -34,9 +34,10 @@ async def extract_menu_from_image(
     provider: MenuVisionProvider = Depends(get_vision_provider),
 ) -> MenuExtractionResult:
     """Validate, preprocess, and extract menu text blocks."""
-    if not file.content_type or not any(file.content_type.startswith(p) for p in ["image/jpeg", "image/png", "image/webp"]):
+    allowed_mimes = ["image/jpeg", "image/png", "image/webp", "image/mpo", "image/pjpeg"]
+    if not file.content_type or not any(file.content_type.startswith(p) for p in allowed_mimes):
         raise InvalidImageError(
-            f"Unsupported file type '{file.content_type}'. Must be image/jpeg, image/png, or image/webp."
+            f"Unsupported file type '{file.content_type}'. Must be image/jpeg, image/png, image/webp, or image/mpo."
         )
 
     image_bytes = await file.read()

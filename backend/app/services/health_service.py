@@ -157,9 +157,12 @@ class HealthService:
                         "model": model_name,
                         "messages": [{"role": "user", "content": "ping"}],
                         "stream": False,
+                        "options": {
+                            "num_predict": 5,
+                        },
                     }
                     try:
-                        probe_res = await client.post(probe_url, json=probe_payload, timeout=15.0)
+                        probe_res = await client.post(probe_url, json=probe_payload, timeout=45.0)
                         active_inference_ok = (probe_res.status_code == 200)
                     except Exception as probe_err:
                         logger.warning(f"Active inference probe failed: {probe_err}")

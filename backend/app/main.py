@@ -46,10 +46,11 @@ def create_app() -> FastAPI:
     # Register central exception handlers
     register_exception_handlers(app)
 
-    # Configure CORS for local Next.js frontend
+    # Configure CORS for local Next.js frontend (supports localhost, 127.0.0.1, LAN IPs, and any local ports)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.cors_origins,
+        allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1|0\.0\.0\.0|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2\d|3[0-1])\.\d+\.\d+)(:\d+)?$",
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],

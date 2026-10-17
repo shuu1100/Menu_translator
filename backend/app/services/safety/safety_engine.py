@@ -337,6 +337,8 @@ class CulinarySafetyEngine:
         dietary: DietaryCompatibility,
         allergens: List[AllergenWarning],
         user_restrictions: List[str],
+        extracted_ingredients: Optional[List[str]] = None,
+        rag_record: Optional[Any] = None,
     ) -> List[str]:
         """Cross-check user dietary restrictions against evidence and flags.
         
@@ -351,20 +353,14 @@ class CulinarySafetyEngine:
             if "vegan" in r:
                 if dietary.vegan == DietaryFlagStatus.NO:
                     conflicts.append("Non-vegan ingredients detected (violates vegan restriction)")
-                elif dietary.vegan == DietaryFlagStatus.UNKNOWN:
-                    conflicts.append("Vegan status unverified: Confirm formulation with restaurant staff")
 
             elif "vegetarian" in r:
                 if dietary.vegetarian == DietaryFlagStatus.NO:
                     conflicts.append("Meat or seafood detected (violates vegetarian restriction)")
-                elif dietary.vegetarian == DietaryFlagStatus.UNKNOWN:
-                    conflicts.append("Vegetarian status unverified: Confirm formulation with restaurant staff")
 
             elif "halal" in r:
                 if dietary.halal == DietaryFlagStatus.NO:
                     conflicts.append("Pork, alcohol, or non-halal ingredients detected (violates halal restriction)")
-                elif dietary.halal == DietaryFlagStatus.UNKNOWN:
-                    conflicts.append("Halal status unverified: Confirm meat sourcing and alcohol absence with restaurant staff")
 
             # 2. Specific allergen restrictions
             elif "gluten" in r or "celiac" in r:
@@ -373,15 +369,13 @@ class CulinarySafetyEngine:
                     for w in allergens
                 ) or (dietary.gluten_free == DietaryFlagStatus.NO)
                 if has_gluten:
-                    conflicts.append("Gluten containing ingredients detected (violates gluten-free restriction)")
-                elif dietary.gluten_free == DietaryFlagStatus.UNKNOWN:
-                    conflicts.append("Gluten-free status unverified: Confirm cross-contact risks with restaurant staff")
+                    conflicts.append("Gluten-containing ingredients detected (violates gluten-free restriction)")
 
             elif "dairy" in r or "lactose" in r or "milk" in r:
                 has_dairy = any(
                     w.allergen == "dairy" and w.status in [EvidenceStatus.CONFIRMED, EvidenceStatus.POSSIBLE]
                     for w in allergens
-                )
+                ) or (any("milk" in ing.lower() or "cream" in ing.lower() or "dairy" in ing.lower() for ing in (extracted_ingredients or [])))
                 if has_dairy:
                     conflicts.append("Dairy / milk ingredients detected (violates dairy restriction)")
 
@@ -393,8 +387,8 @@ class CulinarySafetyEngine:
                 )
                 if has_nuts:
                     conflicts.append("Nut or peanut ingredients detected (violates nut allergy restriction)")
-                else:
-                    conflicts.append("Nut allergy caution: Absence of listed nuts is not proof of allergen safety. Confirm with staff.")
+                elif rag_record is None or getattr(rag_record, "verification_status", None) != "verified":
+                    conflicts.append("Nut allergy caution: recipe unverified, kitchen cross-contamination possible")
 
             elif "shellfish" in r or "crustacean" in r:
                 has_shellfish = any(

@@ -106,8 +106,38 @@ class Settings(BaseSettings):
         description="Maximum concurrent pipeline inference requests",
     )
     pipeline_timeout_seconds: int = Field(
-        default=120,
+        default=300,
         description="Maximum overall timeout for end-to-end menu analysis pipeline in seconds",
+    )
+
+    # Food Image Discovery & Matching
+    image_search_provider: str = Field(
+        default="auto",
+        description="Image search provider: 'auto', 'unsplash', 'pexels', 'wikimedia', 'curated'",
+    )
+    unsplash_access_key: Optional[str] = Field(
+        default=None,
+        description="Unsplash API Access Key (Client-ID). Kept secret on backend only.",
+    )
+    unsplash_secret_key: Optional[str] = Field(
+        default=None,
+        description="Unsplash API Secret Key. Kept secret on backend only.",
+    )
+    pexels_api_key: Optional[str] = Field(
+        default=None,
+        description="Pexels API Key. Kept secret on backend only.",
+    )
+    image_cache_ttl_seconds: int = Field(
+        default=86400,
+        description="TTL for cached dish image results in seconds (24 hours default)",
+    )
+    image_search_timeout_seconds: float = Field(
+        default=3.5,
+        description="Timeout for external image search API requests in seconds",
+    )
+    image_search_max_concurrency: int = Field(
+        default=5,
+        description="Maximum concurrent image API lookups per batch",
     )
 
 

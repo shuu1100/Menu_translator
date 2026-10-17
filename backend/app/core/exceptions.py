@@ -112,13 +112,27 @@ def register_exception_handlers(app: FastAPI) -> None:
 
     @app.exception_handler(StarletteHTTPException)
     async def http_exception_handler(request: Request, exc: StarletteHTTPException) -> JSONResponse:
+        code = f"HTTP_{exc.status_code}"
+        message = "HTTP error"
+        details: Dict[str, Any] = {}
+
+        if isinstance(exc.detail, str):
+            message = exc.detail
+        elif isinstance(exc.detail, dict):
+            details = exc.detail
+            message = str(exc.detail.get("message") or exc.detail.get("error") or "HTTP error")
+            code = str(exc.detail.get("code") or code)
+        elif isinstance(exc.detail, list):
+            details = {"errors": exc.detail}
+            message = "Validation failed for request parameters"
+
         return JSONResponse(
             status_code=exc.status_code,
             content={
                 "error": {
-                    "code": f"HTTP_{exc.status_code}",
-                    "message": exc.detail if isinstance(exc.detail, str) else "HTTP error",
-                    "details": exc.detail if isinstance(exc.detail, dict) else {},
+                    "code": code,
+                    "message": message,
+                    "details": details,
                 }
             },
         )

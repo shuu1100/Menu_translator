@@ -12,7 +12,10 @@ from backend.app.core.exceptions import (
     ServerOverloadedError,
 )
 from backend.app.schemas.menu_analysis import (
+    AnalyzedDish,
     MenuAnalysisResponse,
+    RetranslateRequest,
+    RetranslateResponse,
     SupportedLanguage,
 )
 from backend.app.services.pipeline_orchestrator import MenuPipelineOrchestrator
@@ -73,6 +76,10 @@ async def analyze_menu(
         default=None,
         description="Optional comma-separated or JSON list of dietary restrictions (e.g. 'vegan, gluten-free')",
     ),
+    dietary_restrictions: Optional[str] = Form(
+        default=None,
+        description="Alias for user_dietary_restrictions",
+    ),
     restaurant_id: Optional[str] = Form(
         default=None,
         description="Optional restaurant ID for scoped knowledge retrieval",
@@ -80,6 +87,10 @@ async def analyze_menu(
     apply_clahe: bool = Form(
         default=False,
         description="Apply adaptive contrast equalization for dim restaurant lighting",
+    ),
+    rotation: int = Form(
+        default=0,
+        description="Clockwise rotation in degrees (0, 90, 180, 270)",
     ),
     orchestrator: MenuPipelineOrchestrator = Depends(get_pipeline_orchestrator),
     settings: Settings = Depends(get_settings),
@@ -98,13 +109,7 @@ async def analyze_menu(
             },
         )
 
-    # 2. Validate MIME type
-    if not file.content_type or not any(file.content_type.startswith(m) for m in ["image/jpeg", "image/png", "image/webp"]):
-        raise InvalidImageError(
-            f"Unsupported file type '{file.content_type}'. Must be image/jpeg, image/png, or image/webp."
-        )
-
-    # 3. Read image bytes and enforce 413 Payload Too Large
+    # 2. Read image bytes and enforce 413 Payload Too Large
     image_bytes = await file.read()
     if not image_bytes:
         raise InvalidImageError("Uploaded image payload is empty.")
@@ -119,10 +124,36 @@ async def analyze_menu(
             },
         )
 
+    # 3. Validate image format (via MIME type, filename extension, or magic bytes)
+    allowed_mimes = ["image/jpeg", "image/png", "image/webp", "image/mpo", "image/pjpeg", "image/jfif"]
+    valid_exts = (".jpg", ".jpeg", ".png", ".webp", ".mpo", ".jfif")
+    filename = (file.filename or "").lower()
+    content_type = (file.content_type or "").lower()
+
+    has_valid_mime = any(content_type.startswith(m) for m in allowed_mimes)
+    has_valid_ext = filename.endswith(valid_exts)
+    has_valid_magic = (
+        image_bytes.startswith(b"\xff\xd8\xff")  # JPEG
+        or image_bytes.startswith(b"\x89PNG\r\n\x1a\n")  # PNG
+        or (image_bytes.startswith(b"RIFF") and b"WEBP" in image_bytes[:16])  # WebP
+    )
+
+    if not (has_valid_mime or has_valid_ext or has_valid_magic):
+        raise InvalidImageError(
+            f"Unsupported file type '{content_type or filename or 'unknown'}'. Please upload a JPEG, PNG, or WebP photo."
+        )
+
+    canonical_mime = content_type if has_valid_mime else (
+        "image/png" if image_bytes.startswith(b"\x89PNG") else
+        "image/webp" if image_bytes.startswith(b"RIFF") else
+        "image/jpeg"
+    )
+
     # 4. Parse user dietary restrictions list
+    raw_restrictions = user_dietary_restrictions or dietary_restrictions
     restrictions_list: List[str] = []
-    if user_dietary_restrictions:
-        cleaned = user_dietary_restrictions.strip()
+    if raw_restrictions:
+        cleaned = raw_restrictions.strip()
         if cleaned.startswith("[") and cleaned.endswith("]"):
             try:
                 parsed = json.loads(cleaned)
@@ -147,11 +178,12 @@ async def analyze_menu(
         response = await asyncio.wait_for(
             orchestrator.run_pipeline(
                 image_bytes=image_bytes,
-                mime_type=file.content_type,
+                mime_type=canonical_mime,
                 target_language=lang_enum,
                 user_dietary_restrictions=restrictions_list,
                 restaurant_id=restaurant_id,
                 apply_clahe=apply_clahe,
+                rotation=rotation,
             ),
             timeout=float(settings.pipeline_timeout_seconds),
         )
@@ -179,3 +211,78 @@ async def analyze_menu(
         )
     finally:
         sem.release()
+
+
+@router.post(
+    "/retranslate",
+    response_model=RetranslateResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Retranslate existing menu dishes to another language",
+    description="Retranslates already-extracted dishes without re-uploading the image.",
+)
+async def retranslate_menu(
+    payload: RetranslateRequest,
+    orchestrator: MenuPipelineOrchestrator = Depends(get_pipeline_orchestrator),
+) -> RetranslateResponse:
+    """Retranslate dish items into a newly selected target language."""
+    try:
+        lang_enum = SupportedLanguage.from_code(payload.target_language)
+    except ValueError:
+        valid_langs = [l.value for l in SupportedLanguage]
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail={
+                "code": "UNSUPPORTED_LANGUAGE",
+                "message": f"Unsupported target language '{payload.target_language}'. Supported: {', '.join(valid_langs)}",
+            },
+        )
+
+    # Always translate from original OCR / extracted dish text and description,
+    # never from previously translated text to avoid compounding errors.
+    batch_items = [
+        {
+            "original_name": dish.original_name or dish.original_text,
+            "printed_desc": dish.original_description or "",
+            "price": dish.price,
+            "rag_record": None,
+        }
+        for dish in payload.dishes
+    ]
+
+    translations = await orchestrator.translator.translate_batch(
+        items=batch_items,
+        target_language=lang_enum,
+    )
+
+    updated_dishes: List[AnalyzedDish] = []
+    for idx, dish in enumerate(payload.dishes):
+        trans = translations[idx] if idx < len(translations) else None
+        updated_dish = dish.model_copy()
+        if trans:
+            # Synchronize both title/name aliases
+            updated_dish.translated_title = trans.translated_title
+            updated_dish.translated_name = trans.translated_title
+
+            if trans.phonetic_transcription:
+                updated_dish.phonetic_transcription = trans.phonetic_transcription
+                updated_dish.transliteration = trans.phonetic_transcription
+
+            # Only provide a translated description if the dish had an authentic printed description
+            if dish.original_description:
+                desc = trans.culinary_description or dish.original_description
+                updated_dish.culinary_description = desc
+                updated_dish.translated_description = desc
+            else:
+                updated_dish.culinary_description = None
+                updated_dish.translated_description = None
+
+            if trans.flavor_profile:
+                updated_dish.flavor_profile = trans.flavor_profile
+
+        # Ensure original text remains completely untouched and image is preserved
+        updated_dishes.append(updated_dish)
+
+    return RetranslateResponse(
+        dishes=updated_dishes,
+        target_language=lang_enum.value,
+    )

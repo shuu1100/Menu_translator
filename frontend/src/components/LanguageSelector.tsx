@@ -2,7 +2,7 @@
 
 import React from "react";
 import { SupportedLanguage } from "../types/menu";
-import { Globe } from "lucide-react";
+import { Globe, ChevronDown } from "lucide-react";
 
 interface LanguageOption {
   code: SupportedLanguage;
@@ -22,39 +22,41 @@ export const SUPPORTED_LANGUAGES: LanguageOption[] = [
   { code: "ar", name: "Arabic", nativeName: "العربية", isRtl: true },
   { code: "pt", name: "Portuguese", nativeName: "Português" },
   { code: "ko", name: "Korean", nativeName: "한국어" },
+  { code: "hi", name: "Hindi", nativeName: "हिन्दी" },
+  { code: "ru", name: "Russian", nativeName: "Русский" },
 ];
 
 interface LanguageSelectorProps {
   value: SupportedLanguage;
   onChange: (language: SupportedLanguage) => void;
   disabled?: boolean;
+  className?: string;
 }
 
 export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   value,
   onChange,
   disabled = false,
+  className = "",
 }) => {
   return (
-    <div className="flex items-center gap-2">
-      <div className="relative inline-flex items-center">
-        <Globe className="w-4 h-4 text-slate-400 absolute left-3 pointer-events-none" />
+    <div className={`flex items-center ${className}`}>
+      <div className="relative inline-flex items-center w-full">
+        <Globe className="w-4 h-4 text-[#C74735] absolute left-3 pointer-events-none" />
         <select
           value={value}
           onChange={(e) => onChange(e.target.value as SupportedLanguage)}
           disabled={disabled}
           aria-label="Target Translation Language"
-          className="appearance-none bg-slate-900 border border-slate-700/80 hover:border-slate-600 rounded-xl pl-9 pr-8 py-2 text-xs sm:text-sm font-medium text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-inner"
+          className="w-full appearance-none bg-white border border-[#EADFD5] hover:border-[#8C716C]/40 rounded-full pl-9 pr-8 py-2 text-xs sm:text-sm font-semibold text-[#1F1B18] focus:outline-none focus:ring-2 focus:ring-[#C74735]/25 focus:border-[#C74735] transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_1px_3px_rgba(41,37,34,0.04)]"
         >
           {SUPPORTED_LANGUAGES.map((lang) => (
-            <option key={lang.code} value={lang.code} className="bg-slate-900 text-slate-100">
+            <option key={lang.code} value={lang.code} className="bg-white text-[#1F1B18] py-1">
               {lang.nativeName} ({lang.name})
             </option>
           ))}
         </select>
-        <div className="absolute right-3 pointer-events-none text-slate-400 text-[10px]">
-          ▼
-        </div>
+        <ChevronDown className="w-3.5 h-3.5 absolute right-3 pointer-events-none text-[#58413D]" />
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
 
 from backend.app.schemas.extraction import BoundingBox, ExtractionWarning
+from backend.app.schemas.image_search import DishImageInfo
 
 
 class SupportedLanguage(str, Enum):
@@ -20,6 +21,28 @@ class SupportedLanguage(str, Enum):
     IT = "it"
     PT = "pt"
     KO = "ko"
+    HI = "hi"
+    RU = "ru"
+
+    @classmethod
+    def from_code(cls, code: str) -> "SupportedLanguage":
+        """Normalize language code (e.g. 'zh-CN' -> 'zh', 'ES' -> 'es')."""
+        if not code:
+            return cls.EN
+        c = code.lower().strip()
+        if c in ("zh-cn", "zh_cn", "zh-hans"):
+            return cls.ZH
+        if c in ("pt-br", "pt_br", "pt-pt"):
+            return cls.PT
+        for item in cls:
+            if item.value == c:
+                return item
+        # Try 2-letter prefix
+        prefix = c.split("-")[0].split("_")[0]
+        for item in cls:
+            if item.value == prefix:
+                return item
+        raise ValueError(f"Unsupported language code '{code}'")
 
 
 class EvidenceStatus(str, Enum):
@@ -81,30 +104,108 @@ class AllergenWarning(BaseModel):
 class AnalyzedDish(BaseModel):
     """Fully analyzed dish record combining extraction, enrichment, and safety evaluation."""
 
+    # Primary identifiers & reading order
     dish_id: str
+    id: Optional[str] = None
     reading_order: int
     section: Optional[str] = None
+    category: Optional[str] = None
+    section_original: Optional[str] = None
+    section_translated: Optional[str] = None
+    tags: List[str] = Field(default_factory=list, description="Promotional or category badges (e.g. Best Seller, New, Signature)")
     bounding_box: BoundingBox
-    original_text: str = Field(description="Verbatim native script as printed")
-    phonetic_transcription: Optional[str] = None
+
+    # Names and Pronunciation
+    original_text: str = Field(description="Verbatim native dish name as printed")
+    original_name: Optional[str] = Field(default=None, description="Exact source-language dish name")
     translated_title: str = Field(description="Contextual translated dish title")
+    translated_name: Optional[str] = Field(default=None, description="Translated dish name")
+    phonetic_transcription: Optional[str] = None
+    transliteration: Optional[str] = None
+
+    # Descriptions
+    original_description: Optional[str] = Field(
+        default=None, description="Verbatim native description printed on the menu"
+    )
     culinary_description: Optional[str] = Field(
-        default=None, description="Culinary explanation and cultural context"
+        default=None, description="Faithful translation of printed description (or None if none printed)"
+    )
+    translated_description: Optional[str] = Field(
+        default=None, description="Faithful translation of the printed description"
+    )
+    generated_description: Optional[str] = Field(
+        default=None, description="Optional AI-generated culinary narrative, clearly labelled as non-printed"
     )
     flavor_profile: Optional[str] = Field(
         default=None, description="Flavor profile descriptors (e.g. savory, umami, spicy, sweet)"
     )
+
+    # Prices
+    price: Optional[str] = None
+    currency: Optional[str] = None
+    price_value: Optional[float] = None
+    price_currency: Optional[str] = None
+    price_text_original: Optional[str] = None
+
+    # Ingredients & Grounding
     key_ingredients: List[str] = Field(
         default_factory=list, description="Extracted or matched ingredients"
     )
+    ingredients_original: List[str] = Field(
+        default_factory=list, description="Ingredients explicitly listed in the source"
+    )
+    ingredients_translated: List[str] = Field(
+        default_factory=list, description="Translations of those ingredients"
+    )
+    ingredients_verified: List[str] = Field(
+        default_factory=list, description="Ingredients confirmed through trusted source"
+    )
+    ingredient_evidence_status: EvidenceStatus = Field(
+        default=EvidenceStatus.NOT_LISTED,
+        description="Explicit status describing where the ingredient info came from",
+    )
+
+    # Allergens, Nutrition & Dietary Safety
     allergen_warnings: List[AllergenWarning] = Field(default_factory=list)
+    allergens: List[AllergenWarning] = Field(default_factory=list)
+    nutrition: Optional[Dict[str, Any]] = None
     dietary_compatibility: DietaryCompatibility = Field(default_factory=DietaryCompatibility)
-    price: Optional[str] = None
-    currency: Optional[str] = None
+    dietary_evidence: Dict[str, str] = Field(default_factory=dict)
+    confidence: Optional[float] = Field(default=0.95, description="Extraction confidence score")
+    source_evidence: Optional[str] = None
     evidence_status: EvidenceStatus = Field(
         default=EvidenceStatus.UNVERIFIED,
         description="Authoritative status of culinary data",
     )
+    representative_image: Optional[DishImageInfo] = Field(
+        default=None,
+        description="Matched representative food photograph metadata with licensing & attribution",
+    )
+
+    def model_post_init(self, __context: Any) -> None:
+        """Synchronize aliases bidirectionally to ensure full contract adherence."""
+        if not self.id:
+            self.id = self.dish_id
+        if not self.original_name:
+            self.original_name = self.original_text
+        if not self.translated_name:
+            self.translated_name = self.translated_title
+        if not self.transliteration:
+            self.transliteration = self.phonetic_transcription
+        if not self.translated_description:
+            self.translated_description = self.culinary_description
+        if not self.section_original:
+            self.section_original = self.section
+        if not self.price_text_original and self.price:
+            self.price_text_original = self.price
+        if not self.price_currency and self.currency:
+            self.price_currency = self.currency
+        if not self.allergens and self.allergen_warnings:
+            self.allergens = self.allergen_warnings
+        if not self.key_ingredients and self.ingredients_translated:
+            self.key_ingredients = self.ingredients_translated
+        elif not self.ingredients_translated and self.key_ingredients:
+            self.ingredients_translated = self.key_ingredients
 
 
 class StageTiming(BaseModel):
@@ -112,6 +213,7 @@ class StageTiming(BaseModel):
 
     stage: str
     duration_ms: float
+    request_id: Optional[str] = None
 
 
 class ProcessingMetadata(BaseModel):
@@ -152,3 +254,19 @@ class MenuAnalysisResponse(BaseModel):
             "Never rely solely on AI for life-threatening allergies. Confirm all ingredients with restaurant staff."
         )
     )
+
+
+class RetranslateRequest(BaseModel):
+    """Request payload to retranslate existing dishes to a new target language."""
+
+    dishes: List[AnalyzedDish]
+    target_language: str
+    user_dietary_restrictions: Optional[List[str]] = None
+
+
+class RetranslateResponse(BaseModel):
+    """Response payload containing retranslated dishes."""
+
+    dishes: List[AnalyzedDish]
+    target_language: str
+

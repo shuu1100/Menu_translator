@@ -20,6 +20,7 @@ class MenuVisionProvider(ABC):
         mime_type: str = "image/jpeg",
         metadata: Optional[Dict[str, Any]] = None,
         apply_clahe: bool = False,
+        rotation: int = 0,
     ) -> MenuExtractionResult:
         """
         Execute visual extraction on menu image bytes.

@@ -23,7 +23,7 @@ CRITICAL RULES:
 5. JSON OUTPUT ONLY: Return valid JSON matching the exact schema requested without markdown fencing.
 """
 
-TRANSLATION_USER_PROMPT = """Translate and enrich the following dish into target language '{target_language}'.
+TRANSLATION_USER_PROMPT = """Translate the following dish into target language '{target_language}'.
 
 <untrusted_menu_text>
 Native Printed Name: {original_name}
@@ -34,11 +34,18 @@ Extracted Price: {price}
 Authoritative Knowledge Base Evidence (if available):
 {kb_evidence}
 
+CRITICAL RULES:
+1. If 'Printed Description' is empty or none was printed on the menu, you MUST set 'culinary_description' to null. NEVER invent recipes or narratives.
+2. If 'Printed Description' is present, translate it faithfully into '{target_language}'.
+3. NEVER translate extraction prompts, model commentary, or reasoning.
+4. Output valid JSON only.
+
 Respond with a single JSON object containing these exact keys:
 {{
   "translated_title": "Contextual title in {target_language}",
   "phonetic_transcription": "Latin phonetic transcription if native script is non-Latin, else null",
-  "culinary_description": "Concise 1-2 sentence culinary explanation of preparation and cultural context",
-  "flavor_profile": "Key taste notes (e.g. savory, umami, smoky, spicy, sweet) or null"
+  "culinary_description": "Faithful translation of printed description, or null if none printed",
+  "flavor_profile": "Key taste notes if known from authoritative evidence, else null"
 }}
 """
+

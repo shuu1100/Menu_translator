@@ -34,6 +34,20 @@ def test_image_processor_valid_decode(sample_jpeg_bytes: bytes) -> None:
     assert img.size == (800, 1000)
 
 
+def test_image_processor_accepts_mpo_format(sample_jpeg_bytes: bytes, monkeypatch) -> None:
+    original_open = Image.open
+
+    def mock_open(*args, **kwargs):
+        im = original_open(*args, **kwargs)
+        im.format = "MPO"
+        return im
+
+    monkeypatch.setattr(Image, "open", mock_open)
+    img = ImageProcessor.validate_and_decode(sample_jpeg_bytes)
+    assert img.mode == "RGB"
+    assert img.size == (800, 1000)
+
+
 def test_image_processor_rejects_empty_payload() -> None:
     with pytest.raises(InvalidImageError, match="empty"):
         ImageProcessor.validate_and_decode(b"")
@@ -360,3 +374,66 @@ def test_backward_compatibility_schema_extension() -> None:
     assert block.original_name == "Pasta"
     assert block.currency is None
     assert block.text_region_type == "dish_item"
+
+
+# -------------------------------------------------------------
+# Phase 6 Focused Parser & Resilience Unit Tests
+# -------------------------------------------------------------
+
+def test_json_parser_valid_json() -> None:
+    raw = '{"source_language": "it", "items": [{"original_name": "Pizza", "price_display": "€10"}]}'
+    lang, items, warnings = ModelJsonParser.parse_and_validate(raw, 1000, 1000)
+    assert lang == "it"
+    assert len(items) == 1
+    assert items[0].original_name == "Pizza"
+
+
+def test_json_parser_unclosed_markdown_fence() -> None:
+    raw = '```json\n{"source_language": "es", "items": [{"original_name": "Taco", "price_display": "$3"}]}'
+    lang, items, warnings = ModelJsonParser.parse_and_validate(raw, 1000, 1000)
+    assert lang == "es"
+    assert len(items) == 1
+    assert items[0].original_name == "Taco"
+
+
+def test_json_parser_thinking_and_commentary() -> None:
+    raw = '<think>I should extract the menu items</think>Here is the extracted menu:\n{"source_language": "fr", "items": [{"original_name": "Croissant", "price_display": "€2"}]}\nEnjoy your meal!'
+    lang, items, warnings = ModelJsonParser.parse_and_validate(raw, 1000, 1000)
+    assert lang == "fr"
+    assert len(items) == 1
+    assert items[0].original_name == "Croissant"
+
+
+def test_json_parser_empty_response_raises_error() -> None:
+    with pytest.raises(ModelInferenceError) as exc_info:
+        ModelJsonParser.parse_and_validate("   ", 1000, 1000)
+    assert exc_info.value.details.get("code") == "EMPTY_RESPONSE"
+
+
+def test_json_parser_no_json_found_raises_error() -> None:
+    with pytest.raises(ModelInferenceError) as exc_info:
+        ModelJsonParser.parse_and_validate("I could not find any readable text in this picture.", 1000, 1000)
+    assert exc_info.value.details.get("code") == "NO_JSON_FOUND"
+
+
+def test_json_parser_truncated_json_recovery() -> None:
+    truncated = '{"source_language": "it", "items": [{"original_name": "Dish 1"}, {"original_name": "Dish 2", "price_display": "€15.'
+    lang, items, warnings = ModelJsonParser.parse_and_validate(truncated, 1000, 1000)
+    assert len(items) == 1
+    assert items[0].original_name == "Dish 1"
+    assert any(w.code == "JSON_TRUNCATION_REPAIRED" for w in warnings)
+
+
+def test_json_parser_syntax_flaw_unquoted_keys_repair() -> None:
+    unquoted = '{\n  source_language: "it",\n  items: [\n    { original_name: "Margherita", price_display: "€9" }\n  ]\n}'
+    lang, items, warnings = ModelJsonParser.parse_and_validate(unquoted, 1000, 1000)
+    assert len(items) == 1
+    assert items[0].original_name == "Margherita"
+    assert any(w.code == "JSON_SYNTAX_REPAIRED" for w in warnings)
+
+
+def test_json_parser_schema_validation_error_invalid_items() -> None:
+    with pytest.raises(ModelInferenceError) as exc_info:
+        ModelJsonParser.parse_and_validate('{"source_language": "it", "items": "INVALID_NOT_A_LIST"}', 1000, 1000)
+    assert exc_info.value.details.get("code") == "SCHEMA_VALIDATION_ERROR"
+

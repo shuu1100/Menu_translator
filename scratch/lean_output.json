@@ -1,0 +1,80 @@
+{
+  "source_language": "ko",
+  "items": [
+    {
+      "original_name": "아이스 브랜드",
+      "section": "ICE GRADE",
+      "price_display": "4.9"
+    },
+    {
+      "original_name": "스윗 브랜드",
+      "section": "SWEET GRADE",
+      "price_display": "4.9"
+    },
+    {
+      "original_name": "토핑 메뉴",
+      "section": "TOPPINGS",
+      "price_display": "1.0"
+    },
+    {
+      "original_name": "시즌 메뉴",
+      "section": "SEASON MENU",
+      "price_display": "5.9"
+    },
+    {
+      "original_name": "사탕가루",
+      "section": "SALTY & SWEET",
+      "price_display": "5.9"
+    },
+    {
+      "original_name": "아이스 브랜드",
+      "section": "ICE GRADE",
+      "price_display": "4.9"
+    },
+    {
+      "original_name": "스윗 브랜드",
+      "section": "SWEET GRADE",
+      "price_display": "4.9"
+    },
+    {
+      "original_name": "토핑 메뉴",
+      "section": "TOPPINGS",
+      "price_display": "1.0"
+    },
+    {
+      "original_name": "시즌 메뉴",
+      "section": "SEASON MENU",
+      "price_display": "5.9"
+    },
+    {
+      "original_name": "사탕가루",
+      "section": "SALTY & SWEET",
+      "price_display": "5.9"
+    },
+    {
+      "original_name": "프루트 티 & 모어",
+      "section": "FRUIT TEA & MORE",
+      "price_display": "5.9"
+    },
+    {
+      "original_name": "밀크 티",
+      "section": "MILK TEA",
+      "price_display": "4.0"
+    },
+    {
+      "original_name": "스무디 티",
+      "section": "SMOOTHIE",
+      "price_display": "4.0"
+    },
+    {
+      "original_name": "오리지널 티",
+      "section": "ORIGINAL TEA",
+      "price_display": "4.0"
+    },
+    {
+      "original_name": "베스트 셀러",
+      "section": "BEST SELLER",
+      "price_display": "1.6"
+    }
+  ]
+}
