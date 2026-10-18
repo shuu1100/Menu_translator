@@ -1,0 +1,63 @@
+CONTENT:
+
+
+THINKING:
+Okay, let's tackle this translation request. The user wants me to translate Korean menu items into English, following specific JSON structure. First, I need to understand each item.
+
+Starting with item_1: "블랙 밀크티". "블랙" is black, and "밀크티" is milk tea. So that's Black Milk Tea. But I should check if there's a standard term. Sometimes it's called Black Tea Milk Tea, but maybe just Black Milk Tea is fine. Wait, in English menus, it's common to say "Black Milk Tea" or "Black Tea Milk Tea". Hmm, maybe "Black Milk Tea" is sufficient.
+
+Item_2: "얼그레이 밀크티". "얼그레이" is Earl Grey. So Earl Grey Milk Tea. That's straightforward. Earl Grey is a type of tea, so combining it with milk tea makes sense.
+
+Item_3: "망고 스무디". "망고" is mango, "스무디" is smoothie. So Mango Smoothie. That's pretty direct.
+
+Item_4: "솔티드 카라멜 밀크티". "솔티드" is salted, "카라멜" is caramel, "밀크티" is milk tea. So Salted Caramel Milk Tea. Wait, "솔티드" is "salted", so "Salted Caramel Milk Tea". But sometimes it's written as "Salted Caramel Milk Tea" or "Salted Caramel Milk Tea". Maybe check if "Salted" is the right term here. Yes, "salty" would be "salty", but "soltyd" is "salted". So "Salted Caramel Milk Tea".
+
+Now, phonetic transcription. For each translated title, I need to provide a phonetic transcription. Let me think. For "Black Milk Tea", it would be /blæk mɪlk tiː/. Wait, but maybe the user wants the pronunciation as it's commonly spoken in English. Let me check standard pronunciations.
+
+Black Milk Tea: /blæk mɪlk tiː/ – but maybe "Black" is /blæk/, "Milk" is /mɪlk/, "Tea" is /tiː/. So combined: /blæk mɪlk tiː/.
+
+Earl Grey Milk Tea: Earl Grey is pronounced /ɜːrl greɪ/, so /ɜːrl greɪ mɪlk tiː/.
+
+Mango Smoothie: /mæŋɡo smuːdi/.
+
+Salted Caramel Milk Tea: /sɔːltɪd kærəməl mɪlk tiː/. Wait, "Salted" is /sɔːltɪd/, "Caramel" is /kærəməl/, so yes.
+
+Culinary description: Need to describe each dish in English. For example, Black Milk Tea: "A classic black tea infused with milk, offering a rich and smooth flavor profile." Earl Grey Milk Tea: "A traditional Earl Grey tea blended with milk, featuring a distinctive bergamot aroma." Mango Smoothie: "A refreshing blend of ripe mangoes, yogurt, and fresh fruits, served chilled." Salted Caramel Milk Tea: "A decadent milk tea with a sweet caramel flavor enhanced by a hint of sea salt, creating a balanced and indulgent taste."
+
+Wait, but the user specified "culinary_description" as a key. Let me check the example. The user provided the structure: id, translated_title, phonetic_transcription, culinary_description.
+
+So for each item, I need to have:
+
+- id: same as given (item_1, etc.)
+
+- translated_title: the English name
+
+- phonetic_transcription: the phonetic spelling
+
+- culinary_description: a brief description in English
+
+Let me verify each item.
+
+Item_1: "블랙 밀크티" → Black Milk Tea
+
+Phonetic: /blæk mɪlk tiː/
+
+Description: "A classic black tea infused with milk, offering a rich and smooth flavor profile."
+
+Item_2: "얼그레이 밀크티" → Earl Grey Milk Tea
+
+Phonetic: /ɜːrl greɪ mɪlk tiː/
+
+Description: "A traditional Earl Grey tea blended with milk, featuring a distinctive bergamot aroma."
+
+Item_3: "망고 스무디" → Mango Smoothie
+
+Phonetic: /mæŋɡo smuːdi/
+
+Description: "A refreshing blend of ripe mangoes, yogurt, and fresh fruits, served chilled."
+
+Item_4: "솔티드 카라멜 밀크티" → Salted Caramel Milk Tea
+
+Phonetic: /sɔːltɪd kærəməl mɪlk tiː/
+
+Description: "A decadent milk tea with a sweet caramel flavor enhanced by a hint of sea salt

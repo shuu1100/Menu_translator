@@ -1,0 +1,47 @@
+{
+  "source_language": "ko",
+  "items": [
+    {
+      "reading_order": 1,
+      "section": "ORIGINAL TEA",
+      "original_name": "블랙 밀크티",
+      "price_display": "4.5 / 5.6",
+      "box_2d": null
+    },
+    {
+      "reading_order": 2,
+      "section": "MILK TEA",
+      "original_name": "아이스 블랙 밀크티",
+      "price_display": "4.5 / 5.6",
+      "box_2d": null
+    },
+    {
+      "reading_order": 3,
+      "section": "SMOOTHIE",
+      "original_name": "아이스 블랙 스무디",
+      "price_display": "4.5 / 5.6",
+      "box_2d": null
+    },
+    {
+      "reading_order": 4,
+      "section": "FRUIT TEA",
+      "original_name": "아이스 블랙 페인트",
+      "price_display": "4.5 / 5.6",
+      "box_2d": null
+    },
+    {
+      "reading_order": 5,
+      "section": "SEASON MENU",
+      "original_name": "가을 블랙 밀크티",
+      "price_display": "4.5 / 5.6",
+      "box_2d": null
+    },
+    {
+      "reading_order": 6,
+      "section": "BEST SELLER",
+      "original_name": "블랙 밀크티",
+      "price_display": "4.5 / 5.6",
+      "box_2d": null
+    }
+  ]
+}

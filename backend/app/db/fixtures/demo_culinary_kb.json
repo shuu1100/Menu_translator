@@ -1,0 +1,295 @@
+{
+  "_notice": "FICTIONAL DEMO RECORDS ONLY. For testing, demonstration, and evaluation of hybrid RAG and cross-restaurant isolation. Not authoritative real-world recipes.",
+  "restaurants": [
+    {
+      "restaurant_id": "rest_sakura_tokyo",
+      "display_name": "Sakura Noodle House (Demo)",
+      "locale": "ja-JP",
+      "location_label": "Shinjuku, Tokyo (Fictional Demo)"
+    },
+    {
+      "restaurant_id": "rest_trattoria_roma",
+      "display_name": "Trattoria Da Marco (Demo)",
+      "locale": "it-IT",
+      "location_label": "Trastevere, Rome (Fictional Demo)"
+    },
+    {
+      "restaurant_id": "rest_el_sol_oaxaca",
+      "display_name": "Taquería El Sol (Demo)",
+      "locale": "es-MX",
+      "location_label": "Oaxaca Centro (Fictional Demo)"
+    },
+    {
+      "restaurant_id": "rest_al_sham_damascus",
+      "display_name": "Al Sham Kitchen (Demo)",
+      "locale": "ar-SY",
+      "location_label": "Old City, Damascus (Fictional Demo)"
+    }
+  ],
+  "dishes": [
+    {
+      "dish_id": "dish_sakura_shoyu_ramen",
+      "restaurant_id": "rest_sakura_tokyo",
+      "native_name": "醤油ラーメン",
+      "aliases": ["Shoyu Ramen", "Soy Sauce Ramen", "しょうゆラーメン"],
+      "phonetic_spelling": "Shōyu Rāmen",
+      "canonical_category": "Noodles",
+      "base_ingredients": ["wheat ramen noodles", "seasoned soy sauce broth", "chashu pork belly", "menma bamboo shoots", "scallions", "nori seaweed"],
+      "cooking_technique": "Simmered dashi and pork stock infused with aged shoyu tare",
+      "cultural_narrative": "A Tokyo staple originating in the early 20th century, balancing rich savory umami with aromatic ginger and scallion.",
+      "flavor_profile": "savory, umami, deep soy sauce aroma",
+      "known_allergens": ["gluten", "soy", "pork"],
+      "dietary_flags": {
+        "is_vegan": false,
+        "is_vegetarian": false,
+        "is_gluten_free": false,
+        "is_halal": false
+      },
+      "price_metadata": {"amount": 850, "currency": "JPY"},
+      "provenance": "sakura_tokyo_menu_spec_v1",
+      "verification_status": "verified",
+      "ingredients": [
+        {"dish_id": "dish_sakura_shoyu_ramen", "name": "wheat ramen noodles", "quantity": "140", "unit": "g", "source": "kitchen_prep", "verification_status": "verified"},
+        {"dish_id": "dish_sakura_shoyu_ramen", "name": "soy sauce tare", "quantity": "30", "unit": "ml", "source": "kitchen_prep", "verification_status": "verified"},
+        {"dish_id": "dish_sakura_shoyu_ramen", "name": "chashu pork", "quantity": "2", "unit": "slices", "source": "kitchen_prep", "verification_status": "verified"}
+      ],
+      "allergen_evidence": [
+        {"dish_id": "dish_sakura_shoyu_ramen", "allergen": "gluten", "status": "contains", "evidence_source": "Verified wheat ramen noodle formulation", "reviewer_metadata": "Demo Head Chef"},
+        {"dish_id": "dish_sakura_shoyu_ramen", "allergen": "soy", "status": "contains", "evidence_source": "Brewed shoyu soy tare", "reviewer_metadata": "Demo Head Chef"}
+      ]
+    },
+    {
+      "dish_id": "dish_sakura_miso_ramen",
+      "restaurant_id": "rest_sakura_tokyo",
+      "native_name": "味噌ラーメン",
+      "aliases": ["Miso Ramen", "みそラーメン"],
+      "phonetic_spelling": "Miso Rāmen",
+      "canonical_category": "Noodles",
+      "base_ingredients": ["wheat noodles", "fermented red miso paste", "chicken broth", "bean sprouts", "sweet corn", "butter"],
+      "cooking_technique": "Wok-fried vegetables deglazed with rich miso broth",
+      "cultural_narrative": "Hokkaido-inspired warming noodle soup known for deep fermented miso fragrance and sweet corn.",
+      "flavor_profile": "hearty, savory, sweet miso",
+      "known_allergens": ["gluten", "soy", "dairy"],
+      "dietary_flags": {
+        "is_vegan": false,
+        "is_vegetarian": false,
+        "is_gluten_free": false,
+        "is_halal": false
+      },
+      "price_metadata": {"amount": 950, "currency": "JPY"},
+      "provenance": "sakura_tokyo_menu_spec_v1",
+      "verification_status": "verified",
+      "ingredients": [
+        {"dish_id": "dish_sakura_miso_ramen", "name": "wheat noodles", "quantity": "140", "unit": "g", "source": "kitchen_prep", "verification_status": "verified"},
+        {"dish_id": "dish_sakura_miso_ramen", "name": "red miso paste", "quantity": "40", "unit": "g", "source": "supplier_label", "verification_status": "verified"},
+        {"dish_id": "dish_sakura_miso_ramen", "name": "butter", "quantity": "10", "unit": "g", "source": "supplier_label", "verification_status": "verified"}
+      ],
+      "allergen_evidence": [
+        {"dish_id": "dish_sakura_miso_ramen", "allergen": "gluten", "status": "contains", "evidence_source": "Wheat noodles", "reviewer_metadata": "Demo Head Chef"},
+        {"dish_id": "dish_sakura_miso_ramen", "allergen": "dairy", "status": "contains", "evidence_source": "Dairy butter pat topping", "reviewer_metadata": "Demo Head Chef"},
+        {"dish_id": "dish_sakura_miso_ramen", "allergen": "soy", "status": "contains", "evidence_source": "Fermented soybean miso paste", "reviewer_metadata": "Demo Head Chef"}
+      ]
+    },
+    {
+      "dish_id": "dish_sakura_secret_pork_tonkotsu",
+      "restaurant_id": "rest_sakura_tokyo",
+      "native_name": "秘伝特製豚骨スープ",
+      "aliases": ["Sakura Secret Tonkotsu Broth", "Secret Pork Broth"],
+      "phonetic_spelling": "Hiden Tokusei Tonkotsu Sūpu",
+      "canonical_category": "Private House Special",
+      "base_ingredients": ["pork marrow bones", "secret aged mirin", "garlic oil"],
+      "cooking_technique": "18-hour continuous emulsification under high flame",
+      "cultural_narrative": "Private house specialty recipe restricted strictly to Sakura Noodle House.",
+      "flavor_profile": "intense pork collagen, rich, garlicky",
+      "known_allergens": ["pork"],
+      "dietary_flags": {
+        "is_vegan": false,
+        "is_vegetarian": false,
+        "is_gluten_free": true,
+        "is_halal": false
+      },
+      "provenance": "sakura_tokyo_secret_recipes_vault",
+      "verification_status": "verified",
+      "ingredients": [
+        {"dish_id": "dish_sakura_secret_pork_tonkotsu", "name": "pork marrow bones", "source": "proprietary_prep", "verification_status": "verified"}
+      ],
+      "allergen_evidence": [
+        {"dish_id": "dish_sakura_secret_pork_tonkotsu", "allergen": "pork", "status": "contains", "evidence_source": "Pork marrow broth", "reviewer_metadata": "Owner"}
+      ]
+    },
+    {
+      "dish_id": "dish_trattoria_carbonara",
+      "restaurant_id": "rest_trattoria_roma",
+      "native_name": "Spaghetti alla Carbonara",
+      "aliases": ["Carbonara", "Pasta Carbonara"],
+      "phonetic_spelling": "Spaghetti alla Karbonara",
+      "canonical_category": "Primi",
+      "base_ingredients": ["durum wheat spaghetti", "cured guanciale pork", "Pecorino Romano DOP cheese", "fresh egg yolks", "coarse black pepper"],
+      "cooking_technique": "Emulsified off-heat with starchy pasta water to form creamy velvet sauce without cream",
+      "cultural_narrative": "Authentic Roman culinary staple created in post-war Rome, strictly prepared without cream or peas.",
+      "flavor_profile": "peppery, salty, rich egg yolk and aged sheep cheese",
+      "known_allergens": ["gluten", "dairy", "egg", "pork"],
+      "dietary_flags": {
+        "is_vegan": false,
+        "is_vegetarian": false,
+        "is_gluten_free": false,
+        "is_halal": false
+      },
+      "price_metadata": {"amount": 14.5, "currency": "EUR"},
+      "provenance": "trattoria_roma_certified_menu",
+      "verification_status": "verified",
+      "ingredients": [
+        {"dish_id": "dish_trattoria_carbonara", "name": "durum wheat spaghetti", "source": "pasta_box", "verification_status": "verified"},
+        {"dish_id": "dish_trattoria_carbonara", "name": "guanciale", "source": "butcher", "verification_status": "verified"},
+        {"dish_id": "dish_trattoria_carbonara", "name": "Pecorino Romano DOP", "source": "cheesemaker", "verification_status": "verified"},
+        {"dish_id": "dish_trattoria_carbonara", "name": "egg yolks", "source": "farm_fresh", "verification_status": "verified"}
+      ],
+      "allergen_evidence": [
+        {"dish_id": "dish_trattoria_carbonara", "allergen": "gluten", "status": "contains", "evidence_source": "Durum wheat pasta", "reviewer_metadata": "Executive Chef"},
+        {"dish_id": "dish_trattoria_carbonara", "allergen": "dairy", "status": "contains", "evidence_source": "Pecorino Romano sheep cheese", "reviewer_metadata": "Executive Chef"},
+        {"dish_id": "dish_trattoria_carbonara", "allergen": "egg", "status": "contains", "evidence_source": "Egg yolk cream emulsion", "reviewer_metadata": "Executive Chef"}
+      ]
+    },
+    {
+      "dish_id": "dish_trattoria_private_tiramisu",
+      "restaurant_id": "rest_trattoria_roma",
+      "native_name": "Tiramisù della Nonna",
+      "aliases": ["House Tiramisu", "Secret Family Tiramisu"],
+      "phonetic_spelling": "Teeramisu della Nonna",
+      "canonical_category": "Dolci",
+      "base_ingredients": ["savoiardi ladyfingers", "mascarpone cream", "espresso", "marsala wine", "cocoa powder"],
+      "cooking_technique": "Layered and chilled 12 hours",
+      "cultural_narrative": "Private house dessert recipe restricted strictly to Trattoria Da Marco.",
+      "flavor_profile": "bittersweet espresso, rich mascarpone cream",
+      "known_allergens": ["gluten", "dairy", "egg", "alcohol"],
+      "dietary_flags": {
+        "is_vegan": false,
+        "is_vegetarian": true,
+        "is_gluten_free": false,
+        "is_halal": false
+      },
+      "price_metadata": {"amount": 7.0, "currency": "EUR"},
+      "provenance": "trattoria_roma_private_vault",
+      "verification_status": "verified",
+      "ingredients": [
+        {"dish_id": "dish_trattoria_private_tiramisu", "name": "mascarpone", "source": "dairy", "verification_status": "verified"}
+      ],
+      "allergen_evidence": [
+        {"dish_id": "dish_trattoria_private_tiramisu", "allergen": "dairy", "status": "contains", "evidence_source": "Mascarpone", "reviewer_metadata": "Chef Marco"},
+        {"dish_id": "dish_trattoria_private_tiramisu", "allergen": "gluten", "status": "contains", "evidence_source": "Wheat ladyfingers", "reviewer_metadata": "Chef Marco"}
+      ]
+    },
+    {
+      "dish_id": "dish_global_falafel",
+      "restaurant_id": null,
+      "native_name": "فلافل",
+      "aliases": ["Falafel", "Ta'amiya", "طعمية"],
+      "phonetic_spelling": "Falāfil",
+      "canonical_category": "Street Food",
+      "base_ingredients": ["soaked dried chickpeas", "fava beans", "fresh parsley", "fresh cilantro", "garlic", "ground cumin", "coriander seed", "sea salt"],
+      "cooking_technique": "Coarsely ground raw legumes formed into patties and deep-fried until golden crisp",
+      "cultural_narrative": "Classic Levantine and Middle Eastern legume fritter prized across the Levant and North Africa.",
+      "flavor_profile": "crisp exterior, herbaceous, nutty, aromatic cumin",
+      "known_allergens": ["sesame"],
+      "dietary_flags": {
+        "is_vegan": true,
+        "is_vegetarian": true,
+        "is_gluten_free": true,
+        "is_halal": true
+      },
+      "provenance": "public_culinary_corpus_mena_v1",
+      "verification_status": "verified",
+      "ingredients": [
+        {"dish_id": "dish_global_falafel", "name": "chickpeas", "source": "legumes", "verification_status": "verified"},
+        {"dish_id": "dish_global_falafel", "name": "fresh parsley and cilantro", "source": "herbs", "verification_status": "verified"}
+      ],
+      "allergen_evidence": [
+        {"dish_id": "dish_global_falafel", "allergen": "sesame", "status": "may_contain", "evidence_source": "Typically served with tahini sauce or rolled in sesame seeds prior to frying", "reviewer_metadata": "Dietary Review Board"}
+      ]
+    },
+    {
+      "dish_id": "dish_global_hummus",
+      "restaurant_id": null,
+      "native_name": "حمص بالطحينة",
+      "aliases": ["Hummus", "Hummus bi Tahini", "حمص"],
+      "phonetic_spelling": "Hummus bi-t-Tahīna",
+      "canonical_category": "Mezze",
+      "base_ingredients": ["cooked chickpeas", "tahini sesame paste", "fresh lemon juice", "garlic", "extra virgin olive oil", "salt"],
+      "cooking_technique": "Blended hot until silky smooth emulsion forms",
+      "cultural_narrative": "Centuries-old Levantine mezze staple served with flatbread and olive oil.",
+      "flavor_profile": "creamy, nutty, bright citrus, savory garlic",
+      "known_allergens": ["sesame"],
+      "dietary_flags": {
+        "is_vegan": true,
+        "is_vegetarian": true,
+        "is_gluten_free": true,
+        "is_halal": true
+      },
+      "provenance": "public_culinary_corpus_mena_v1",
+      "verification_status": "verified",
+      "ingredients": [
+        {"dish_id": "dish_global_hummus", "name": "chickpeas", "source": "legumes", "verification_status": "verified"},
+        {"dish_id": "dish_global_hummus", "name": "tahini paste", "source": "sesame", "verification_status": "verified"}
+      ],
+      "allergen_evidence": [
+        {"dish_id": "dish_global_hummus", "allergen": "sesame", "status": "contains", "evidence_source": "Contains pure sesame seed tahini paste as primary ingredient", "reviewer_metadata": "Dietary Review Board"}
+      ]
+    },
+    {
+      "dish_id": "dish_global_pizza_margherita",
+      "restaurant_id": null,
+      "native_name": "Pizza Margherita",
+      "aliases": ["Margherita", "Pizza Napoletana Margherita"],
+      "phonetic_spelling": "Peet-tsa Mar-geh-ree-ta",
+      "canonical_category": "Pizza",
+      "base_ingredients": ["Type 00 wheat flour", "San Marzano tomatoes", "fresh fior di latte mozzarella", "fresh basil leaves", "extra virgin olive oil"],
+      "cooking_technique": "Wood-fired stone oven at 450°C for 60-90 seconds",
+      "cultural_narrative": "Named after Queen Margherita of Savoy in 1889, representing the colors of the Italian flag.",
+      "flavor_profile": "sweet acidic tomato, milky fresh cheese, fragrant basil, charred dough",
+      "known_allergens": ["gluten", "dairy"],
+      "dietary_flags": {
+        "is_vegan": false,
+        "is_vegetarian": true,
+        "is_gluten_free": false,
+        "is_halal": true
+      },
+      "provenance": "public_culinary_corpus_italy_v1",
+      "verification_status": "verified",
+      "ingredients": [
+        {"dish_id": "dish_global_pizza_margherita", "name": "Type 00 wheat flour", "source": "flour_mill", "verification_status": "verified"},
+        {"dish_id": "dish_global_pizza_margherita", "name": "fior di latte mozzarella", "source": "dairy", "verification_status": "verified"}
+      ],
+      "allergen_evidence": [
+        {"dish_id": "dish_global_pizza_margherita", "allergen": "gluten", "status": "contains", "evidence_source": "Wheat flour crust", "reviewer_metadata": "Culinary Assessor"},
+        {"dish_id": "dish_global_pizza_margherita", "allergen": "dairy", "status": "contains", "evidence_source": "Mozzarella cheese", "reviewer_metadata": "Culinary Assessor"}
+      ]
+    },
+    {
+      "dish_id": "dish_demo_unverified_dessert",
+      "restaurant_id": null,
+      "native_name": "抹茶アイスクリーム",
+      "aliases": ["Matcha Ice Cream", "Green Tea Ice Cream"],
+      "phonetic_spelling": "Matcha Aisu Kurīmu",
+      "canonical_category": "Dessert",
+      "base_ingredients": ["matcha green tea powder", "dairy cream", "milk", "sugar"],
+      "cooking_technique": "Chilled churned custard",
+      "cultural_narrative": "Modern Japanese dessert pairing stone-ground Uji matcha with rich dairy.",
+      "flavor_profile": "bittersweet green tea, sweet creamy finish",
+      "known_allergens": ["dairy"],
+      "dietary_flags": {
+        "is_vegan": false,
+        "is_vegetarian": true,
+        "is_gluten_free": true,
+        "is_halal": null
+      },
+      "provenance": "crowdsourced_demo_import",
+      "verification_status": "unverified",
+      "ingredients": [
+        {"dish_id": "dish_demo_unverified_dessert", "name": "dairy cream", "source": "unverified_entry", "verification_status": "unverified"}
+      ],
+      "allergen_evidence": [
+        {"dish_id": "dish_demo_unverified_dessert", "allergen": "dairy", "status": "contains", "evidence_source": "User submission (unverified)", "reviewer_metadata": "Pending verification"}
+      ]
+    }
+  ]
+}

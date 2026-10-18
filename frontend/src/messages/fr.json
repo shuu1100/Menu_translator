@@ -1,0 +1,140 @@
+{
+  "header": {
+    "title": "Universal Menu Translator",
+    "badge": "Local AI Lens",
+    "subtitle": "Privacy-Preserving On-Device Vision & Culinary RAG",
+    "uiLanguage": "Website Language",
+    "targetLanguage": "Translate Menu To",
+    "scan": "Scan",
+    "upload": "Upload",
+    "reset": "Reset"
+  },
+  "hero": {
+    "pill": "Votre menu, dans votre langue",
+    "headingPrefix": "Chaque menu,",
+    "headingHighlight": "D'accord.",
+    "description": "Pointez votre appareil photo vers un menu ou téléchargez une photo de celui-ci. Universal Menu Translator décode les écritures étrangères, dévoile les techniques culinaires authentiques, explique les ingrédients et analyse les allergènes grâce à une IA locale 100 % privée intégrée à votre appareil.",
+    "scanButton": "Numériser avec l'appareil photo",
+    "uploadButton": "Menu « Importer une photo »",
+    "analyzingButton": "Analyse du menu...",
+    "rotateButton": "Pivoter : {rotation}°",
+    "rotateTooltip": "Faire pivoter l'orientation de la photo si celle-ci a été prise à l'horizontale",
+    "privacyBadge": "Modèle de vision local 100 % privé, fonctionnant directement sur l'appareil • Aucune donnée n'est envoyée vers le cloud"
+  },
+  "demos": {
+    "tag": "Essayez les démos instantanées",
+    "title": "Découvrez des menus du monde entier",
+    "description": "Testez le traducteur avec un exemple de menu avant de mettre en ligne le vôtre. C'est instantané, sans aucun temps d'attente.",
+    "cuisinesBadge": "6 cuisines sélectionnées avec soin",
+    "dishesCount": "{count} des plats authentiques",
+    "offlineReady": "Prêt à fonctionner hors ligne",
+    "exploreMenu": "Explore Menu",
+    "instantDemo": "Instant Demo"
+  },
+  "preview": {
+    "adjustTitle": "Adjust Photo Orientation Before Scanning",
+    "rotate90": "Rotate 90° ({rotation}°)",
+    "cancel": "Cancel",
+    "extractButton": "Extract & Translate Menu ({rotation}° rotated)"
+  },
+  "dropzone": {
+    "activeTitle": "Drop your menu photo here",
+    "idleTitle": "Drop menu photo or click to browse",
+    "sub": "Supports JPG, PNG, WebP up to 15MB"
+  },
+  "dietary": {
+    "title": "Personal Dietary & Allergy Filter",
+    "subtitle": "Filter dishes against personal sensitivities",
+    "activeBadge": "{count} active",
+    "gluten": "Gluten-Free",
+    "dairy": "Dairy-Free",
+    "vegetarian": "Vegetarian",
+    "vegan": "Vegan",
+    "nut": "Sans fruits à coque",
+    "shellfish": "Sans fruits de mer",
+    "halal": "Halal",
+    "kosher": "Casher"
+  },
+  "steps": {
+    "tag": "Un dîner en toute simplicité",
+    "title": "Comment ça marche en trois étapes",
+    "step1Title": "Capturer ou télécharger",
+    "step1Desc": "Prenez une photo quelle que soit la luminosité. La rotation à 90° permet d'afficher les menus à l'horizontale.",
+    "step2Title": "Filter & Translate",
+    "step2Desc": "Choose target language and set personal dietary restrictions.",
+    "step3Title": "Explore Safely",
+    "step3Desc": "Listen to authentic pronunciation and audit verified ingredient claims."
+  },
+  "results": {
+    "analyzedBadge": "Menu Translation Complete",
+    "dishesCount": "{count} dishes identified",
+    "tabStructured": "Structured Menu",
+    "tabOverlay": "Interactive Photo Overlay",
+    "searchPlaceholder": "Rechercher des plats, des ingrédients ou des allergènes...",
+    "allSections": "Toutes les rubriques",
+    "retranslating": "Conversion de {language}...",
+    "safetyConflicts": "{count} Conflits alimentaires",
+    "details": "Détails",
+    "listen": "Écoutez",
+    "spiciness": "Piquant",
+    "allergens": "Allergènes",
+    "confidence": "Confiance : {score} %",
+    "noDishesFound": "Aucun plat ne correspond à votre filtre",
+    "noDishesDesc": "Essayez de supprimer votre critère de recherche ou vos filtres alimentaires."
+  },
+  "camera": {
+    "viewfinderTitle": "Menu Appareil photo Viseur",
+    "viewfinderSub": "Alignez les plats imprimés et les prix à l'intérieur du cadre",
+    "unavailableTitle": "Flux vidéo indisponible",
+    "retry": "Réessayer avec l'appareil photo",
+    "deviceCamera": "Appareil photo de l'appareil",
+    "uploadPhoto": "Upload Photo",
+    "waitingPermission": "Waiting for Camera Permission...",
+    "initSensor": "Initialisation du capteur de la caméra...",
+    "promptNotice": "Veuillez cliquer sur « Autoriser » si votre navigateur vous demande l'autorisation d'accéder à la caméra.",
+    "grantButton": "Grant / Démarrer la caméra",
+    "liveBadge": "Viewfinder Live",
+    "holdSteady": "Maintenir les éléments du menu fixes et centrés",
+    "capturedReady": "Image capturée – Prêt",
+    "capturePhoto": "Prendre une photo",
+    "retake": "Refaire l'examen",
+    "analyzeMenu": "Menu « Analyser »"
+  },
+  "processing": {
+    "title": "Analyse de la photo du menu...",
+    "subtitle": "Traitement à l'aide de l'IA de vision locale",
+    "stepOcr": "Extraction de la mise en page visuelle et de la typographie",
+    "stepRag": "Découverte de profils culinaires authentiques",
+    "stepTranslation": "Traduire les plats et les nuances culinaires",
+    "stepSafety": "Contrôle des allergènes et de la compatibilité alimentaire",
+    "cancel": "Annuler l'analyse"
+  },
+  "drawer": {
+    "title": "Détails du plat",
+    "original": "Nom d'origine",
+    "translated": "Nom traduit",
+    "pronunciation": "Prononciation",
+    "description": "Description et profil culinaire",
+    "ingredients": "Ingrédients principaux",
+    "technique": "Technique de préparation",
+    "flavors": "Notes gustatives",
+    "safety": "Audit sur les allergènes et la sécurité alimentaire",
+    "close": "Fermer"
+  },
+  "offline": {
+    "offlineTitle": "Backend déconnecté",
+    "offlineDesc": "Impossible de se connecter au backend FastAPI sur le port 8001. Vérifiez que le serveur backend est bien en cours d'exécution.",
+    "modelInit": "Le modèle de vision IA local (qwen3-vl:8b) est en cours d'initialisation. Veuillez patienter.",
+    "refresh": "Actualiser la connexion"
+  },
+  "errors": {
+    "retryAnalysis": "Analyse des nouvelles tentatives",
+    "dismiss": "Ignorer l'erreur",
+    "unsupportedFile": "Type de fichier non pris en charge « {type} ». Veuillez télécharger une photo au format JPEG, PNG ou WebP.",
+    "fileTooLarge": "Le fichier est trop volumineux ({size} Mo). La taille maximale autorisée pour un téléchargement est de {max} Mo.",
+    "pipelineTimeout": "Délai d'analyse dépassé : le modèle local a mis trop de temps à traiter cette image. Essayez de redresser la photo ou d'utiliser une image de menu plus nette.",
+    "modelUnavailable": "Le service de modèle de vision par IA local n'est pas disponible. Veuillez vérifier qu'Ollama est bien en cours d'exécution (« ollama serve »).",
+    "invalidImage": "Impossible de décoder l'image. Veuillez fournir une photo de menu au format JPEG, PNG ou WebP valide.",
+    "networkError": "Impossible d'accéder au backend de Menu Translator sur le port 8001. Veuillez vérifier que le service backend est bien en cours d'exécution."
+  }
+}
