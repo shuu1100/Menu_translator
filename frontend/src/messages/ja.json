@@ -1,0 +1,140 @@
+{
+  "header": {
+    "title": "Universal Menu Translator",
+    "badge": "Local AI Lens",
+    "subtitle": "Privacy-Preserving On-Device Vision & Culinary RAG",
+    "uiLanguage": "Website Language",
+    "targetLanguage": "Translate Menu To",
+    "scan": "Scan",
+    "upload": "Upload",
+    "reset": "Reset"
+  },
+  "hero": {
+    "pill": "お客様の言語で表示されるメニュー",
+    "headingPrefix": "どのメニューも、",
+    "headingHighlight": "わかりました。",
+    "description": "カメラを向けたり、メニューの写真をアップロードしたりしてください。「Universal Menu Translator」は、100%プライベートな端末内ローカルAIを活用して、外国語の文字を解読し、本格的な調理法を明らかにし、食材を解説し、アレルゲンをチェックします。",
+    "scanButton": "カメラでスキャンする",
+    "uploadButton": "メニュー写真をアップロード",
+    "analyzingButton": "メニューを分析中...",
+    "rotateButton": "回転：{rotation}°",
+    "rotateTooltip": "メニューが横向きで撮影された場合は、写真の向きを回転させてください",
+    "privacyBadge": "100% 端末内でのプライベートなローカル視覚モデル • クラウドへのデータ送信は一切なし"
+  },
+  "demos": {
+    "tag": "今すぐデモをお試しください",
+    "title": "世界各国のメニューを探索しよう",
+    "description": "ご自身のメニューをアップロードする前に、サンプルメニューを使って翻訳機能を試してみてください。瞬時に翻訳され、待ち時間ゼロです。",
+    "cuisinesBadge": "厳選された6つの料理",
+    "dishesCount": "{count} 本場の料理",
+    "offlineReady": "オフライン対応",
+    "exploreMenu": "Explore Menu",
+    "instantDemo": "Instant Demo"
+  },
+  "preview": {
+    "adjustTitle": "Adjust Photo Orientation Before Scanning",
+    "rotate90": "Rotate 90° ({rotation}°)",
+    "cancel": "Cancel",
+    "extractButton": "Extract & Translate Menu ({rotation}° rotated)"
+  },
+  "dropzone": {
+    "activeTitle": "Drop your menu photo here",
+    "idleTitle": "Drop menu photo or click to browse",
+    "sub": "Supports JPG, PNG, WebP up to 15MB"
+  },
+  "dietary": {
+    "title": "Personal Dietary & Allergy Filter",
+    "subtitle": "Filter dishes against personal sensitivities",
+    "activeBadge": "{count} active",
+    "gluten": "Gluten-Free",
+    "dairy": "Dairy-Free",
+    "vegetarian": "Vegetarian",
+    "vegan": "Vegan",
+    "nut": "ナッツ不使用",
+    "shellfish": "甲殻類不使用",
+    "halal": "ハラール",
+    "kosher": "コーシャー"
+  },
+  "steps": {
+    "tag": "気楽な食事",
+    "title": "3つのステップで仕組みを解説",
+    "step1Title": "撮影またはアップロード",
+    "step1Desc": "どんな照明環境でも写真を撮れます。90°回転機能により、横向きのメニューにも対応しています。",
+    "step2Title": "Filter & Translate",
+    "step2Desc": "Choose target language and set personal dietary restrictions.",
+    "step3Title": "Explore Safely",
+    "step3Desc": "Listen to authentic pronunciation and audit verified ingredient claims."
+  },
+  "results": {
+    "analyzedBadge": "Menu Translation Complete",
+    "dishesCount": "{count} dishes identified",
+    "tabStructured": "Structured Menu",
+    "tabOverlay": "Interactive Photo Overlay",
+    "searchPlaceholder": "料理、食材、またはアレルゲンを検索…",
+    "allSections": "すべてのセクション",
+    "retranslating": "{language}への変換中...",
+    "safetyConflicts": "{count} 食品の相性",
+    "details": "詳細",
+    "listen": "聞いてください",
+    "spiciness": "辛さ",
+    "allergens": "アレルゲン",
+    "confidence": "信頼度：{score}％",
+    "noDishesFound": "指定した条件に一致する料理はありません",
+    "noDishesDesc": "検索クエリや食事制限のフィルターを一度解除してみてください。"
+  },
+  "camera": {
+    "viewfinderTitle": "メニュー　カメラ　ファインダー",
+    "viewfinderSub": "フレーム内に印刷された料理と価格を揃えてください",
+    "unavailableTitle": "カメラ映像が利用できません",
+    "retry": "カメラを再試行",
+    "deviceCamera": "デバイスのカメラ",
+    "uploadPhoto": "Upload Photo",
+    "waitingPermission": "Waiting for Camera Permission...",
+    "initSensor": "カメラセンサーの初期化中...",
+    "promptNotice": "お使いのブラウザでカメラへのアクセスを許可するよう求められた場合は、「許可」をクリックしてください。",
+    "grantButton": "グラント / カメラを起動",
+    "liveBadge": "ビューファインダー・ライブ",
+    "holdSteady": "メニュー項目を固定し、中央に配置する",
+    "capturedReady": "フレームのキャプチャ完了",
+    "capturePhoto": "写真を撮影する",
+    "retake": "再受験",
+    "analyzeMenu": "「分析」メニュー"
+  },
+  "processing": {
+    "title": "メニューの写真を分析中...",
+    "subtitle": "ローカルVision AIによる処理",
+    "stepOcr": "視覚的なレイアウトとタイポグラフィの抽出",
+    "stepRag": "本格的な料理の特徴を把握する",
+    "stepTranslation": "料理と食文化のニュアンスを伝える",
+    "stepSafety": "アレルゲンおよび食事の適合性の監査",
+    "cancel": "分析をキャンセル"
+  },
+  "drawer": {
+    "title": "料理の詳細",
+    "original": "元の名称",
+    "translated": "翻訳された名称",
+    "pronunciation": "発音",
+    "description": "商品説明と料理の特徴",
+    "ingredients": "主な原材料",
+    "technique": "下ごしらえの方法",
+    "flavors": "風味の特徴",
+    "safety": "アレルゲンおよび食品の安全性監査",
+    "close": "閉じる"
+  },
+  "offline": {
+    "offlineTitle": "バックエンドが切断されました",
+    "offlineDesc": "ポート 8001 の FastAPI バックエンドに接続できません。バックエンドサーバーが実行されていることを確認してください。",
+    "modelInit": "ローカルのAIビジョンモデル（qwen3-vl:8b）を初期化しています。しばらくお待ちください。",
+    "refresh": "接続を更新"
+  },
+  "errors": {
+    "retryAnalysis": "再試行の分析",
+    "dismiss": "エラーを閉じる",
+    "unsupportedFile": "「{type}」はサポートされていないファイル形式です。JPEG、PNG、またはWebP形式の画像をアップロードしてください。",
+    "fileTooLarge": "ファイルが大きすぎます（{size}MB）。アップロード可能な最大サイズは{max}MBです。",
+    "pipelineTimeout": "解析のタイムアウトが発生しました：ローカルモデルによるこの画像の処理に時間がかかりすぎました。写真を正しい向きにしたり、より鮮明なメニューの写真を試してみてください。",
+    "modelUnavailable": "ローカルのAIビジョンモデルサービスが利用できません。Ollamaが実行されていることを確認してください（'ollama serve'）。",
+    "invalidImage": "画像をデコードできませんでした。有効なJPEG、PNG、またはWebP形式のメニュー画像を指定してください。",
+    "networkError": "ポート 8001 の Menu Translator バックエンドに接続できません。バックエンドサービスが実行されていることを確認してください。"
+  }
+}

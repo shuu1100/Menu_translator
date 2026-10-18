@@ -42,6 +42,7 @@ import { DishImage } from "../components/DishImage";
 import { OfflineBanner } from "../components/OfflineBanner";
 import { SAMPLE_MENUS } from "../data/sample_menus";
 import { apiClient } from "../services/apiClient";
+import { useTranslation } from "../i18n/I18nContext";
 import {
   ACCEPTED_IMAGE_TYPES,
   ACCEPTED_IMAGE_MIMES,
@@ -66,6 +67,8 @@ interface HealthData {
 }
 
 export default function Home() {
+  const { t, uiLanguage, setUiLanguage, isRtl } = useTranslation();
+
   // Navigation & Screen state
   const [activeScreen, setActiveScreen] = useState<"capture" | "results">("capture");
   const [targetLanguage, setTargetLanguage] = useState<SupportedLanguage>("en");
@@ -440,20 +443,36 @@ export default function Home() {
           </div>
           <div>
             <h1 className="text-sm sm:text-base font-bold text-[#1F1B18] flex items-center gap-2">
-              Universal Menu Translator
+              {t("header.title")}
               <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-[#EAF5EE] text-[#166742] border border-[#B2DEC4]">
-                Local AI Lens
+                {t("header.badge")}
               </span>
             </h1>
             <p className="text-[11px] text-[#70645C] hidden sm:block">
-              Privacy-Preserving On-Device Vision & Culinary RAG
+              {t("header.subtitle")}
             </p>
           </div>
         </div>
 
-        {/* Global Controls */}
-        <div className="flex items-center gap-2.5">
-          <LanguageSelector value={targetLanguage} onChange={setTargetLanguage} />
+        {/* Global Controls: Website Language & Menu Target Language */}
+        <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-end">
+          <LanguageSelector
+            value={uiLanguage}
+            onChange={setUiLanguage}
+            label={t("header.uiLanguage")}
+            iconType="globe"
+          />
+          <LanguageSelector
+            value={targetLanguage}
+            onChange={(newLang) => {
+              setTargetLanguage(newLang);
+              if (activeScreen === "results" && analysisResult && analysisResult.dishes.length > 0) {
+                handleRetranslate(newLang);
+              }
+            }}
+            label={t("header.targetLanguage")}
+            iconType="translate"
+          />
 
           {activeScreen === "results" && (
             <div className="flex items-center gap-2">
@@ -464,7 +483,7 @@ export default function Home() {
                 className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full bg-[#C74735] hover:bg-[#A52F20] text-xs font-bold text-white transition-all cursor-pointer shadow-sm active:scale-95"
               >
                 <Camera className="w-3.5 h-3.5 text-white" />
-                <span className="hidden sm:inline">Scan</span>
+                <span className="hidden sm:inline">{t("header.scan")}</span>
               </button>
               <button
                 type="button"
@@ -473,7 +492,7 @@ export default function Home() {
                 className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full bg-[#FBF2ED] hover:bg-[#F2DFD3] border border-[#EADFD5] text-xs font-bold text-[#1F1B18] transition-all cursor-pointer shadow-sm active:scale-95"
               >
                 <Upload className="w-3.5 h-3.5 text-[#C74735]" />
-                <span className="hidden sm:inline">Upload</span>
+                <span className="hidden sm:inline">{t("header.upload")}</span>
               </button>
               <button
                 type="button"
@@ -482,7 +501,7 @@ export default function Home() {
                 className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-[#FFFFFF] hover:bg-[#FBF2ED] border border-[#EADFD5] text-xs font-bold text-[#70645C] hover:text-[#1F1B18] transition-all cursor-pointer shadow-sm active:scale-95"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Reset</span>
+                <span className="hidden sm:inline">{t("header.reset")}</span>
               </button>
             </div>
           )}
@@ -505,13 +524,13 @@ export default function Home() {
                   onClick={() => handleAnalyzeMenuImage(pendingFile, rotation)}
                   className="px-3 py-1.5 rounded-xl bg-[#C74735] hover:bg-[#A52F20] text-white text-xs font-bold transition-all shadow-sm cursor-pointer"
                 >
-                  Retry Analysis
+                  {t("errors.retryAnalysis")}
                 </button>
               )}
               <button
                 onClick={() => setErrorMessage(null)}
                 className="text-[#9B6416] hover:text-[#1F1B18] font-bold text-sm cursor-pointer px-1"
-                aria-label="Dismiss error"
+                aria-label={t("errors.dismiss")}
               >
                 ×
               </button>
@@ -528,16 +547,16 @@ export default function Home() {
               <div className="lg:col-span-7 flex flex-col gap-5">
                 <div className="inline-flex items-center gap-2 self-start px-3.5 py-1.5 rounded-full bg-[#F2DFD3] text-[#A52F20] text-xs font-bold border border-[#EADFD5]/60 shadow-xs">
                   <Sparkles className="w-3.5 h-3.5 text-[#C74735]" />
-                  <span>Your menu, in your language</span>
+                  <span>{t("hero.pill")}</span>
                 </div>
 
                 <h2 className="text-3xl sm:text-5xl font-extrabold text-[#1F1B18] tracking-tight leading-[1.15]">
-                  Every menu, <br className="hidden sm:inline" />
-                  <span className="text-[#C74735]">understood.</span>
+                  {t("hero.headingPrefix")} <br className="hidden sm:inline" />
+                  <span className="text-[#C74735]">{t("hero.headingHighlight")}</span>
                 </h2>
 
                 <p className="text-sm sm:text-base text-[#70645C] leading-relaxed max-w-xl">
-                  Point your camera or upload a menu photo. Universal Menu Translator decodes foreign scripts, reveals authentic culinary techniques, explains ingredients, and audits allergens using 100% private on-device local AI.
+                  {t("hero.description")}
                 </p>
 
                 {/* Primary & Secondary Call to Actions */}
@@ -551,7 +570,7 @@ export default function Home() {
                     }`}
                   >
                     <Camera className="w-5 h-5 text-white" />
-                    <span>Scan with Camera</span>
+                    <span>{t("hero.scanButton")}</span>
                   </button>
 
                   <label
@@ -569,7 +588,7 @@ export default function Home() {
                     }`}
                   >
                     <Upload className="w-5 h-5 text-[#C74735] pointer-events-none" />
-                    <span className="pointer-events-none">{isProcessing ? "Analyzing Menu..." : "Upload Menu Photo"}</span>
+                    <span className="pointer-events-none">{isProcessing ? t("hero.analyzingButton") : t("hero.uploadButton")}</span>
                     <input
                       ref={fileInputRef}
                       id="menu-photo-upload"
@@ -591,17 +610,17 @@ export default function Home() {
                     disabled={isProcessing}
                     onClick={() => setRotation((r) => (r + 90) % 360)}
                     className="w-full sm:w-auto px-4 h-13 rounded-2xl bg-[#FFFFFF] hover:bg-[#FBF2ED] text-[#70645C] hover:text-[#1F1B18] font-semibold text-xs border border-[#EADFD5] flex items-center justify-center gap-2 active:scale-[0.98] transition-all shadow-sm cursor-pointer"
-                    title="Rotate photo orientation if menu was taken sideways"
+                    title={t("hero.rotateTooltip")}
                   >
                     <RotateCw className="w-4 h-4 text-[#C74735]" />
-                    <span>Rotate: {rotation}°</span>
+                    <span>{t("hero.rotateButton", { rotation })}</span>
                   </button>
                 </div>
 
                 {/* Privacy Badge */}
                 <div className="flex items-center gap-2 text-xs text-[#70645C] pt-1">
                   <Lock className="w-3.5 h-3.5 text-[#C74735] shrink-0" />
-                  <span>100% private on-device local vision model • Zero data sent to the cloud</span>
+                  <span>{t("hero.privacyBadge")}</span>
                 </div>
               </div>
 
@@ -631,35 +650,6 @@ export default function Home() {
                       40+ Cuisines
                     </span>
                   </div>
-
-                  {/* Bottom Overlaid Dish Card Simulation */}
-                  <div className="absolute bottom-3 left-3 right-3 bg-[#FFFFFF]/95 backdrop-blur-md rounded-2xl p-3.5 border border-[#EADFD5] shadow-lg flex flex-col gap-1.5">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-1.5">
-                        <span className="w-1.5 h-4 rounded-full bg-[#C74735]" />
-                        <h4 className="text-xs font-bold text-[#1F1B18]">
-                          Tonkotsu Ramen (特製豚骨ラーメン)
-                        </h4>
-                      </div>
-                      <span className="text-xs font-extrabold text-[#A52F20] font-mono">
-                        ¥1,100
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-[#70645C] line-clamp-1">
-                      18-hour collagen-rich pork broth with springy noodles & chashu
-                    </p>
-                    <div className="flex items-center gap-1.5 pt-0.5">
-                      <span className="text-[10px] italic font-mono text-[#A52F20]">
-                        🗣️ Tonkotsu Rāmen
-                      </span>
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#FCF5EB] text-[#9B6416] border border-[#F0D6AF] font-semibold">
-                        ⚠️ Gluten
-                      </span>
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#FCF5EB] text-[#9B6416] border border-[#F0D6AF] font-semibold">
-                        ⚠️ Egg
-                      </span>
-                    </div>
-                  </div>
                 </div>
               </div>
             </section>
@@ -669,17 +659,17 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
                 <div>
                   <div className="text-xs font-extrabold uppercase tracking-widest text-[#C74735] mb-1">
-                    Try Instant Demos
+                    {t("demos.tag")}
                   </div>
                   <h3 className="text-xl sm:text-2xl font-extrabold text-[#1F1B18] tracking-tight">
-                    Explore menus from around the world
+                    {t("demos.title")}
                   </h3>
                   <p className="text-xs sm:text-sm text-[#70645C] mt-0.5">
-                    Try the translator with a sample menu before uploading your own. Instant, zero wait.
+                    {t("demos.description")}
                   </p>
                 </div>
                 <div className="text-xs font-semibold text-[#70645C] bg-[#F2DFD3] px-3 py-1.5 rounded-full border border-[#EADFD5] self-start sm:self-auto shrink-0">
-                  6 Curated Cuisines
+                  {t("demos.cuisinesBadge")}
                 </div>
               </div>
 
@@ -717,10 +707,10 @@ export default function Home() {
                       {/* Bottom Image Label */}
                       <div className="absolute bottom-2.5 left-3 right-3 flex items-center justify-between text-white">
                         <span className="text-xs font-bold drop-shadow-sm">
-                          {sample.dishCount} authentic dishes
+                          {t("demos.dishesCount", { count: sample.dishCount })}
                         </span>
                         <span className="text-[11px] bg-black/40 backdrop-blur-xs px-2 py-0.5 rounded-md text-[#F2DFD3]">
-                          Offline Ready
+                          {t("demos.offlineReady")}
                         </span>
                       </div>
                     </div>
@@ -738,10 +728,10 @@ export default function Home() {
 
                       <div className="pt-3 border-t border-[#EADFD5] flex items-center justify-between">
                         <span className="text-xs font-bold text-[#C74735] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                          Explore Menu <ArrowRight className="w-3.5 h-3.5" />
+                          {t("demos.exploreMenu")} <ArrowRight className="w-3.5 h-3.5" />
                         </span>
                         <span className="text-[11px] text-[#70645C] font-mono">
-                          Instant Demo
+                          {t("demos.instantDemo")}
                         </span>
                       </div>
                     </div>
@@ -756,7 +746,7 @@ export default function Home() {
                 <div className="flex items-center justify-between w-full">
                   <span className="text-xs font-bold text-[#1F1B18] flex items-center gap-2">
                     <RotateCw className="w-4 h-4 text-[#C74735]" />
-                    Adjust Photo Orientation Before Scanning
+                    {t("preview.adjustTitle")}
                   </span>
                   <button
                     type="button"
@@ -764,7 +754,7 @@ export default function Home() {
                     className="px-3.5 py-1.5 rounded-xl bg-[#FBF2ED] hover:bg-[#F2DFD3] text-[#1F1B18] text-xs font-bold border border-[#EADFD5] flex items-center gap-1.5 transition-all cursor-pointer"
                   >
                     <RotateCw className="w-3.5 h-3.5 text-[#C74735]" />
-                    <span>Rotate 90° ({rotation}°)</span>
+                    <span>{t("preview.rotate90", { rotation })}</span>
                   </button>
                 </div>
 
@@ -788,7 +778,7 @@ export default function Home() {
                     }}
                     className="px-4 py-2.5 rounded-xl bg-[#FBF2ED] hover:bg-[#F2DFD3] text-[#70645C] text-xs font-semibold cursor-pointer border border-[#EADFD5] transition-colors"
                   >
-                    Cancel
+                    {t("preview.cancel")}
                   </button>
                   <button
                     type="button"
@@ -797,7 +787,7 @@ export default function Home() {
                     className="flex-1 py-2.5 rounded-xl bg-[#C74735] hover:bg-[#A52F20] text-white font-bold text-xs shadow-lg shadow-[#C74735]/25 transition-all cursor-pointer flex items-center justify-center gap-2"
                   >
                     <Sparkles className="w-4 h-4 text-white" />
-                    <span>Extract & Translate Menu ({rotation}° rotated)</span>
+                    <span>{t("preview.extractButton", { rotation })}</span>
                   </button>
                 </div>
               </div>
@@ -837,10 +827,10 @@ export default function Home() {
               </div>
               <div className="flex flex-col pointer-events-none">
                 <span className="text-sm font-bold text-[#1F1B18]">
-                  {isDragging ? "Drop your menu photo here" : "Drop menu photo or click to browse"}
+                  {isDragging ? t("dropzone.activeTitle") : t("dropzone.idleTitle")}
                 </span>
                 <span className="text-xs text-[#70645C] mt-1">
-                  Supports JPG, PNG, WebP up to 15MB
+                  {t("dropzone.sub")}
                 </span>
               </div>
             </label>
@@ -857,10 +847,10 @@ export default function Home() {
             <div className="flex flex-col gap-4">
               <div className="flex flex-col">
                 <span className="text-xs font-bold uppercase tracking-wider text-[#C74735]">
-                  Effortless Dining
+                  {t("steps.tag")}
                 </span>
                 <h3 className="text-lg font-bold text-[#1F1B18]">
-                  How it works in three steps
+                  {t("steps.title")}
                 </h3>
               </div>
 
@@ -870,10 +860,10 @@ export default function Home() {
                     1
                   </div>
                   <h4 className="text-xs font-bold text-[#1F1B18]">
-                    Capture or Upload
+                    {t("steps.step1Title")}
                   </h4>
                   <p className="text-xs text-[#70645C] leading-relaxed">
-                    Snap a photo in any lighting. 90° rotation handles sideways menus.
+                    {t("steps.step1Desc")}
                   </p>
                 </div>
 
@@ -882,10 +872,10 @@ export default function Home() {
                     2
                   </div>
                   <h4 className="text-xs font-bold text-[#1F1B18]">
-                    Filter & Translate
+                    {t("steps.step2Title")}
                   </h4>
                   <p className="text-xs text-[#70645C] leading-relaxed">
-                    Choose target language and set personal dietary restrictions.
+                    {t("steps.step2Desc")}
                   </p>
                 </div>
 
@@ -894,10 +884,10 @@ export default function Home() {
                     3
                   </div>
                   <h4 className="text-xs font-bold text-[#1F1B18]">
-                    Explore Safely
+                    {t("steps.step3Title")}
                   </h4>
                   <p className="text-xs text-[#70645C] leading-relaxed">
-                    Listen to authentic pronunciation and audit verified ingredient claims.
+                    {t("steps.step3Desc")}
                   </p>
                 </div>
               </div>
@@ -917,10 +907,10 @@ export default function Home() {
                   </div>
                   <div>
                     <h2 className="text-lg font-bold text-[#1F1B18] truncate">
-                      {analysisResult.menu_metadata.restaurant_id || "Restaurant Menu"}
+                      {analysisResult.menu_metadata.restaurant_id || t("results.analyzedBadge")}
                     </h2>
                     <p className="text-xs text-[#70645C]">
-                      {analysisResult.dishes.length} dishes extracted & verified
+                      {t("results.dishesCount", { count: analysisResult.dishes.length })}
                     </p>
                   </div>
                 </div>
@@ -928,7 +918,7 @@ export default function Home() {
                 <div className="flex items-center gap-2">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EAF5EE] text-[#166742] border border-[#B2DEC4] text-xs font-bold shadow-sm">
                     <CheckCircle2 className="w-3.5 h-3.5 text-[#166742]" />
-                    Verified OCR
+                    {t("results.verifiedOcr") || "Verified OCR"}
                   </span>
                   <button
                     type="button"
@@ -936,7 +926,7 @@ export default function Home() {
                     className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#FFF8F5] hover:bg-[#F2DFD3] text-[#1F1B18] text-xs font-bold border border-[#EADFD5] transition-all cursor-pointer shadow-sm active:scale-95"
                   >
                     <ArrowLeft className="w-3.5 h-3.5 text-[#C74735]" />
-                    <span>Scan Another</span>
+                    <span>{t("results.scanAnother") || "Scan Another"}</span>
                   </button>
                 </div>
               </div>
@@ -974,7 +964,11 @@ export default function Home() {
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#C74735] hover:bg-[#A52F20] text-white text-xs font-bold transition-all cursor-pointer shadow-sm shadow-[#C74735]/20 disabled:opacity-50"
                   >
                     <RefreshCw className={`w-3.5 h-3.5 ${isRetranslating ? "animate-spin" : ""}`} />
-                    <span>{isRetranslating ? "Retranslating..." : "Retranslate"}</span>
+                    <span>
+                      {isRetranslating
+                        ? t("results.retranslating", { language: targetLanguage.toUpperCase() })
+                        : t("results.retranslate") || "Retranslate"}
+                    </span>
                   </button>
                 </div>
 
@@ -990,7 +984,7 @@ export default function Home() {
                     }`}
                   >
                     <FileText className="w-3.5 h-3.5" />
-                    <span>Translated Menu</span>
+                    <span>{t("results.tabStructured")}</span>
                   </button>
                   <button
                     type="button"
@@ -1002,7 +996,7 @@ export default function Home() {
                     }`}
                   >
                     <ImageIcon className="w-3.5 h-3.5" />
-                    <span>Photo Canvas</span>
+                    <span>{t("results.tabOverlay")}</span>
                   </button>
                 </div>
               </div>
@@ -1012,7 +1006,7 @@ export default function Home() {
                 <Search className="w-4 h-4 text-[#70645C] absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
-                  placeholder="Search dishes, native script (e.g. 豚骨, 떡볶이), or ingredients..."
+                  placeholder={t("results.searchPlaceholder")}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#FFFFFF] border border-[#EADFD5] text-xs text-[#1F1B18] placeholder-[#70645C] focus:outline-none focus:border-[#C74735] shadow-sm transition-all"
@@ -1026,7 +1020,7 @@ export default function Home() {
                 <div className="flex items-center gap-2.5">
                   <AlertCircle className="w-5 h-5 text-[#9B6416] shrink-0" />
                   <span className="font-medium leading-relaxed">
-                    No legible dishes could be extracted from this photo. If your menu was photographed sideways, try rotating it 90° before scanning, or explore our pre-loaded demo menus.
+                    {t("results.noLegibleDishes") || "No legible dishes could be extracted from this photo. If your menu was photographed sideways, try rotating it 90° before scanning, or explore our pre-loaded demo menus."}
                   </span>
                 </div>
                 <button
@@ -1034,7 +1028,7 @@ export default function Home() {
                   onClick={handleReset}
                   className="px-4 py-2 rounded-xl bg-[#F2DFD3] hover:bg-[#EADFD5] text-[#1F1B18] font-bold shrink-0 cursor-pointer transition-colors border border-[#EADFD5]"
                 >
-                  Try Another Photo
+                  {t("results.tryAnotherPhoto") || "Try Another Photo"}
                 </button>
               </div>
             )}
@@ -1183,7 +1177,7 @@ export default function Home() {
                             : "bg-[#FFFFFF] text-[#70645C] border border-[#EADFD5] hover:text-[#1F1B18]"
                         }`}
                       >
-                        All ({analysisResult.dishes.length})
+                        {t("results.allSections")} ({analysisResult.dishes.length})
                       </button>
                       {sections.map((sec) => {
                         const count = analysisResult.dishes.filter((d) => d.section?.trim() === sec).length;
@@ -1208,7 +1202,7 @@ export default function Home() {
                   {/* Dietary Quick Toggle Chips */}
                   <div className="flex items-center gap-1.5 flex-wrap">
                     <span className="text-[11px] text-[#70645C] font-bold uppercase tracking-wider mr-1">
-                      Filters:
+                      {t("results.filters") || "Filters:"}
                     </span>
                     {["gluten", "dairy", "vegan", "shellfish"].map((tag) => {
                       const active = userRestrictions.includes(tag);
@@ -1313,7 +1307,7 @@ export default function Home() {
                                 {/* Original Native Text and Phonetic Transcription (Explicit verification box) */}
                                 <div className="flex items-center gap-2 flex-wrap bg-[#F5ECE7] px-2.5 py-1.5 rounded-xl border border-[#EADFD5] text-xs">
                                   <span className="text-[10px] uppercase font-bold text-[#70645C] tracking-wider">
-                                    Original:
+                                    {t("results.original") || "Original:"}
                                   </span>
                                   <span className="text-[#1F1B18] font-bold">
                                     {dish.original_name || dish.original_text}
@@ -1332,7 +1326,7 @@ export default function Home() {
                                   </p>
                                 ) : (
                                   <p className="text-[11px] text-[#70645C] italic mt-0.5">
-                                    No description provided on the menu
+                                    {t("results.noDescription") || "No description provided on the menu"}
                                   </p>
                                 )}
 
@@ -1340,7 +1334,7 @@ export default function Home() {
                                 {dish.generated_description && (
                                   <div className="mt-1 p-2.5 rounded-xl bg-[#FBF2ED] border border-[#EADFD5] text-[11px] text-[#58413D] leading-relaxed">
                                     <span className="font-bold text-[#C74735] block text-[10px] uppercase tracking-wider mb-0.5">
-                                      AI Dish Explanation:
+                                      {t("results.aiExplanation") || "AI Dish Explanation:"}
                                     </span>
                                     {dish.generated_description}
                                   </div>
@@ -1367,7 +1361,7 @@ export default function Home() {
                                   {hasConflict && (
                                     <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FFDAD6] text-[#BA1A1A] border border-[#FFDAD6] text-[10px] font-bold">
                                       <ShieldAlert className="w-3 h-3 text-[#BA1A1A]" />
-                                      {dish.dietary_compatibility.user_conflicts.join(", ")} Conflict
+                                      {dish.dietary_compatibility.user_conflicts.join(", ")} {t("results.conflict") || "Conflict"}
                                     </span>
                                   )}
 
@@ -1388,7 +1382,7 @@ export default function Home() {
                                 </div>
 
                                 <div className="text-[11px] font-bold text-[#C74735] group-hover:translate-x-1 transition-transform flex items-center gap-1">
-                                  <span>Details</span>
+                                  <span>{t("results.details")}</span>
                                   <ChevronRight className="w-3.5 h-3.5" />
                                 </div>
                               </div>

@@ -14,6 +14,7 @@ import {
   ShieldAlert,
 } from "lucide-react";
 import { ACCEPTED_IMAGE_TYPES } from "../constants/upload";
+import { useTranslation } from "../i18n/I18nContext";
 
 interface CameraCaptureModalProps {
   isOpen: boolean;
@@ -47,6 +48,7 @@ export const CameraCaptureModal: React.FC<CameraCaptureModalProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [capturedBlob, setCapturedBlob] = useState<Blob | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const { t } = useTranslation();
 
   // Helper to cleanly stop all tracks in active media stream
   const stopActiveStream = useCallback(() => {
@@ -350,10 +352,10 @@ export const CameraCaptureModal: React.FC<CameraCaptureModalProps> = ({
             </div>
             <div>
               <h3 className="text-base font-bold text-[#1F1B18] tracking-tight">
-                Menu Camera Viewfinder
+                {t("camera.viewfinderTitle")}
               </h3>
               <p className="text-xs text-[#70645C]">
-                Align printed dishes and prices inside the frame
+                {t("camera.viewfinderSub")}
               </p>
             </div>
           </div>
@@ -377,7 +379,7 @@ export const CameraCaptureModal: React.FC<CameraCaptureModalProps> = ({
               </div>
               <div>
                 <h4 className="text-sm font-bold text-[#FFF8F5]">
-                  Camera Feed Unavailable
+                  {t("camera.unavailableTitle")}
                 </h4>
                 <p className="text-xs text-[#EADFD5]/90 mt-1.5 leading-relaxed">
                   {error}
@@ -391,7 +393,7 @@ export const CameraCaptureModal: React.FC<CameraCaptureModalProps> = ({
                   className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#C74735] hover:bg-[#A93629] text-white text-xs font-semibold cursor-pointer shadow-lg shadow-[#C74735]/25 transition-all hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <RefreshCw className="w-4 h-4" />
-                  Retry Camera
+                  {t("camera.retry")}
                 </button>
                 <button
                   type="button"
@@ -399,7 +401,7 @@ export const CameraCaptureModal: React.FC<CameraCaptureModalProps> = ({
                   className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#FFFFFF] hover:bg-[#FBF2ED] text-[#1F1B18] text-xs font-semibold border border-[#EADFD5] cursor-pointer transition-all hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <Smartphone className="w-4 h-4 text-[#C74735]" />
-                  Device Camera
+                  {t("camera.deviceCamera")}
                 </button>
                 <button
                   type="button"
@@ -407,7 +409,7 @@ export const CameraCaptureModal: React.FC<CameraCaptureModalProps> = ({
                   className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#FFFFFF] hover:bg-[#FBF2ED] text-[#1F1B18] text-xs font-semibold border border-[#EADFD5] cursor-pointer transition-all hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <Upload className="w-4 h-4 text-[#C74735]" />
-                  Upload Photo
+                  {t("camera.uploadPhoto")}
                 </button>
               </div>
             </div>
@@ -422,7 +424,7 @@ export const CameraCaptureModal: React.FC<CameraCaptureModalProps> = ({
               />
               <div className="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EAF5EE] text-[11px] font-semibold text-[#166742] border border-[#B2DEC4] shadow-md">
                 <Sparkles className="w-3.5 h-3.5" />
-                Frame Captured Ready
+                {t("camera.capturedReady")}
               </div>
             </div>
           ) : (
@@ -442,11 +444,11 @@ export const CameraCaptureModal: React.FC<CameraCaptureModalProps> = ({
                   <Loader2 className="w-8 h-8 text-[#C74735] animate-spin" />
                   <p className="text-sm font-semibold text-[#FFF8F5]">
                     {cameraStatus === "requesting_permission"
-                      ? "Waiting for Camera Permission..."
-                      : "Initializing Camera Sensor..."}
+                      ? t("camera.waitingPermission")
+                      : t("camera.initSensor")}
                   </p>
                   <p className="text-xs text-[#EADFD5]/80 max-w-xs">
-                    Please click &apos;Allow&apos; if your browser prompts for camera access.
+                    {t("camera.promptNotice")}
                   </p>
                   <button
                     type="button"
@@ -454,7 +456,7 @@ export const CameraCaptureModal: React.FC<CameraCaptureModalProps> = ({
                     className="mt-2 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#C74735] hover:bg-[#A93629] text-white text-xs font-semibold shadow-md cursor-pointer transition-all active:scale-95"
                   >
                     <Camera className="w-4 h-4" />
-                    <span>Grant / Start Camera</span>
+                    <span>{t("camera.grantButton")}</span>
                   </button>
                 </div>
               )}
@@ -464,7 +466,7 @@ export const CameraCaptureModal: React.FC<CameraCaptureModalProps> = ({
                 <>
                   <div className="absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFF8F5]/90 backdrop-blur-md text-[11px] font-semibold text-[#166742] border border-[#B2DEC4] shadow-sm">
                     <div className="w-2 h-2 rounded-full bg-[#166742] animate-ping" />
-                    Viewfinder Live
+                    {t("camera.liveBadge")}
                   </div>
 
                   <div className="absolute inset-8 sm:inset-12 border border-[#C74735]/40 rounded-2xl pointer-events-none flex flex-col justify-between p-4 shadow-[0_0_20px_rgba(199,71,53,0.15)]">
@@ -473,7 +475,7 @@ export const CameraCaptureModal: React.FC<CameraCaptureModalProps> = ({
                       <div className="w-7 h-7 border-t-3 border-r-3 border-[#C74735] rounded-tr-lg" />
                     </div>
                     <div className="text-center text-[11px] text-[#FFF8F5] font-medium bg-[#1F1B18]/80 px-4 py-1.5 rounded-full mx-auto backdrop-blur-sm border border-[#EADFD5]/20 shadow-md">
-                      Hold steady & center menu items
+                      {t("camera.holdSteady")}
                     </div>
                     <div className="flex justify-between">
                       <div className="w-7 h-7 border-b-3 border-l-3 border-[#C74735] rounded-bl-lg" />
@@ -498,7 +500,7 @@ export const CameraCaptureModal: React.FC<CameraCaptureModalProps> = ({
               className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#70645C] hover:text-[#C74735] cursor-pointer transition-colors p-1"
             >
               <Upload className="w-4 h-4" />
-              <span>Upload File</span>
+              <span>{t("camera.uploadPhoto")}</span>
             </button>
             <span className="text-[#EADFD5]">|</span>
             <button
@@ -507,7 +509,7 @@ export const CameraCaptureModal: React.FC<CameraCaptureModalProps> = ({
               className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#70645C] hover:text-[#C74735] cursor-pointer transition-colors p-1"
             >
               <Smartphone className="w-4 h-4" />
-              <span>Native Camera</span>
+              <span>{t("camera.deviceCamera")}</span>
             </button>
           </div>
 
@@ -519,7 +521,7 @@ export const CameraCaptureModal: React.FC<CameraCaptureModalProps> = ({
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#FBF2ED] hover:bg-[#F2DFD3] text-[#1F1B18] text-xs font-semibold border border-[#EADFD5] transition-colors cursor-pointer"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
-                Retake
+                {t("camera.retake")}
               </button>
               <button
                 type="button"
@@ -527,7 +529,7 @@ export const CameraCaptureModal: React.FC<CameraCaptureModalProps> = ({
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#C74735] hover:bg-[#A93629] text-white text-xs font-semibold shadow-lg shadow-[#C74735]/25 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
               >
                 <Check className="w-3.5 h-3.5" />
-                Analyze Menu
+                {t("camera.analyzeMenu")}
               </button>
             </div>
           ) : (
@@ -540,14 +542,14 @@ export const CameraCaptureModal: React.FC<CameraCaptureModalProps> = ({
               {cameraStatus === "ready" ? (
                 <>
                   <div className="w-2.5 h-2.5 rounded-full bg-white animate-pulse" />
-                  Capture Photo
+                  {t("camera.capturePhoto")}
                 </>
               ) : (
                 <>
                   <Loader2 className="w-3.5 h-3.5 animate-spin" />
                   {cameraStatus === "requesting_permission"
-                    ? "Waiting for Permission..."
-                    : "Starting Camera..."}
+                    ? t("camera.waitingPermission")
+                    : t("camera.initSensor")}
                 </>
               )}
             </button>

@@ -140,6 +140,24 @@ class Settings(BaseSettings):
         description="Maximum concurrent image API lookups per batch",
     )
 
+    # DeepL API (Website UI Localization & Translation)
+    deepl_api_key: Optional[str] = Field(
+        default=None,
+        description="DeepL API Authentication Key. Kept secret on backend only.",
+    )
+    deepl_api_url: str = Field(
+        default="https://api-free.deepl.com/v2/translate",
+        description="DeepL API base URL (free or pro endpoint)",
+    )
+    deepl_timeout_seconds: float = Field(
+        default=25.0,
+        description="Timeout for DeepL API requests in seconds",
+    )
+    deepl_cache_ttl_seconds: int = Field(
+        default=604800,  # 7 days
+        description="TTL for cached UI translations in seconds",
+    )
+
 
 @lru_cache()
 def get_settings() -> Settings:

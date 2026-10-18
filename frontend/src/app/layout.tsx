@@ -20,6 +20,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { I18nProvider } from "../i18n/I18nContext";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -35,7 +37,7 @@ export default function RootLayout({
         className="min-h-full flex flex-col bg-[#FFF8F5] text-[#1F1B18] font-sans selection:bg-[#F2DFD3] selection:text-[#A52F20]"
         suppressHydrationWarning
       >
-        {children}
+        <I18nProvider>{children}</I18nProvider>
         <script
           dangerouslySetInnerHTML={{
             __html: `

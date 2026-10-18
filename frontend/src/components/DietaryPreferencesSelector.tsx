@@ -2,6 +2,7 @@
 
 import React from "react";
 import { ShieldAlert, Check } from "lucide-react";
+import { useTranslation } from "../i18n/I18nContext";
 
 export interface DietaryOption {
   id: string;
@@ -34,6 +35,7 @@ export const DietaryPreferencesSelector: React.FC<DietaryPreferencesSelectorProp
   onChange,
   compact = false,
 }) => {
+  const { t } = useTranslation();
   const toggleRestriction = (id: string) => {
     if (selected.includes(id)) {
       onChange(selected.filter((item) => item !== id));
@@ -51,7 +53,7 @@ export const DietaryPreferencesSelector: React.FC<DietaryPreferencesSelectorProp
       <div className="flex items-center justify-between">
         <label className="text-xs font-bold text-[#58413D] uppercase tracking-wider flex items-center gap-1.5">
           <ShieldAlert className="w-3.5 h-3.5 text-[#9B6416]" />
-          Dietary Restrictions & Allergens
+          {t("dietary.title")}
         </label>
         {selected.length > 0 && (
           <button
@@ -59,7 +61,7 @@ export const DietaryPreferencesSelector: React.FC<DietaryPreferencesSelectorProp
             onClick={clearAll}
             className="text-[11px] font-semibold text-[#A52F20] hover:text-[#C74735] underline cursor-pointer"
           >
-            Clear all ({selected.length})
+            {t("dietary.clearAll") || "Clear all"} ({selected.length})
           </button>
         )}
       </div>
@@ -67,6 +69,7 @@ export const DietaryPreferencesSelector: React.FC<DietaryPreferencesSelectorProp
       <div className={`flex flex-wrap gap-1.5 ${compact ? "max-h-24 overflow-y-auto" : ""}`}>
         {DIETARY_OPTIONS.map((opt) => {
           const isSelected = selected.includes(opt.id);
+          const localizedLabel = t(`dietary.${opt.id}`) || opt.label;
           return (
             <button
               key={opt.id}
@@ -80,7 +83,7 @@ export const DietaryPreferencesSelector: React.FC<DietaryPreferencesSelectorProp
               }`}
             >
               <span>{opt.iconText}</span>
-              <span>{opt.label}</span>
+              <span>{localizedLabel}</span>
               {isSelected && <Check className="w-3 h-3 text-[#A52F20] stroke-[2.5]" />}
             </button>
           );

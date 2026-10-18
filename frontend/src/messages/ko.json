@@ -1,0 +1,140 @@
+{
+  "header": {
+    "title": "Universal Menu Translator",
+    "badge": "Local AI Lens",
+    "subtitle": "Privacy-Preserving On-Device Vision & Culinary RAG",
+    "uiLanguage": "Website Language",
+    "targetLanguage": "Translate Menu To",
+    "scan": "Scan",
+    "upload": "Upload",
+    "reset": "Reset"
+  },
+  "hero": {
+    "pill": "여러분의 언어로 된 메뉴",
+    "headingPrefix": "모든 메뉴,",
+    "headingHighlight": "알겠습니다.",
+    "description": "카메라를 메뉴판에 대거나 메뉴 사진을 업로드하세요. 유니버설 메뉴 번역기는 100% 기기에서 직접 처리되는 비공개 로컬 AI를 통해 외국어 문자를 해독하고, 정통 요리법을 소개하며, 식재료를 설명하고, 알레르기 유발 성분을 확인해 드립니다.",
+    "scanButton": "카메라로 스캔하기",
+    "uploadButton": "메뉴 사진 업로드",
+    "analyzingButton": "메뉴 분석 중...",
+    "rotateButton": "회전: {rotation}°",
+    "rotateTooltip": "메뉴가 가로로 촬영된 경우 사진의 방향을 회전합니다.",
+    "privacyBadge": "100% 기기에서 처리되는 비공개 로컬 비전 모델 • 클라우드로 전송되는 데이터 없음"
+  },
+  "demos": {
+    "tag": "즉석 데모 체험해 보기",
+    "title": "전 세계의 다양한 메뉴를 만나보세요",
+    "description": "직접 메뉴를 업로드하기 전에 샘플 메뉴로 번역기를 사용해 보세요. 즉시 처리되며, 대기 시간이 전혀 없습니다.",
+    "cuisinesBadge": "엄선된 6가지 요리",
+    "dishesCount": "{count} 정통 요리",
+    "offlineReady": "오프라인 사용 가능",
+    "exploreMenu": "Explore Menu",
+    "instantDemo": "Instant Demo"
+  },
+  "preview": {
+    "adjustTitle": "Adjust Photo Orientation Before Scanning",
+    "rotate90": "Rotate 90° ({rotation}°)",
+    "cancel": "Cancel",
+    "extractButton": "Extract & Translate Menu ({rotation}° rotated)"
+  },
+  "dropzone": {
+    "activeTitle": "Drop your menu photo here",
+    "idleTitle": "Drop menu photo or click to browse",
+    "sub": "Supports JPG, PNG, WebP up to 15MB"
+  },
+  "dietary": {
+    "title": "Personal Dietary & Allergy Filter",
+    "subtitle": "Filter dishes against personal sensitivities",
+    "activeBadge": "{count} active",
+    "gluten": "Gluten-Free",
+    "dairy": "Dairy-Free",
+    "vegetarian": "Vegetarian",
+    "vegan": "Vegan",
+    "nut": "견과류 무첨가",
+    "shellfish": "조개류 무함유",
+    "halal": "할랄",
+    "kosher": "코셔"
+  },
+  "steps": {
+    "tag": "편안한 식사",
+    "title": "3단계로 알아보는 작동 원리",
+    "step1Title": "촬영 또는 업로드",
+    "step1Desc": "어떤 조명 조건에서도 사진을 찍을 수 있습니다. 90° 회전 기능으로 옆으로 돌아간 메뉴도 쉽게 처리할 수 있습니다.",
+    "step2Title": "Filter & Translate",
+    "step2Desc": "Choose target language and set personal dietary restrictions.",
+    "step3Title": "Explore Safely",
+    "step3Desc": "Listen to authentic pronunciation and audit verified ingredient claims."
+  },
+  "results": {
+    "analyzedBadge": "Menu Translation Complete",
+    "dishesCount": "{count} dishes identified",
+    "tabStructured": "Structured Menu",
+    "tabOverlay": "Interactive Photo Overlay",
+    "searchPlaceholder": "요리, 식재료 또는 알레르기 유발 물질을 검색해 보세요...",
+    "allSections": "모든 섹션",
+    "retranslating": "{language}로 변환 중...",
+    "safetyConflicts": "{count} 식품 간 상충",
+    "details": "상세 정보",
+    "listen": "듣기",
+    "spiciness": "매운맛",
+    "allergens": "알레르기 유발 물질",
+    "confidence": "신뢰도: {score}%",
+    "noDishesFound": "필터 조건에 맞는 요리가 없습니다.",
+    "noDishesDesc": "검색어 또는 식단 필터를 지워 보세요."
+  },
+  "camera": {
+    "viewfinderTitle": "메뉴 카메라 뷰파인더",
+    "viewfinderSub": "프레임 안에 인쇄된 요리 사진과 가격을 정렬하세요",
+    "unavailableTitle": "카메라 영상이 제공되지 않습니다",
+    "retry": "카메라 다시 시도",
+    "deviceCamera": "기기 카메라",
+    "uploadPhoto": "Upload Photo",
+    "waitingPermission": "Waiting for Camera Permission...",
+    "initSensor": "카메라 센서 초기화 중...",
+    "promptNotice": "브라우저에서 카메라 사용 권한을 요청하는 메시지가 표시되면 ‘허용’을 클릭해 주세요.",
+    "grantButton": "그랜트 / 카메라 시작",
+    "liveBadge": "뷰파인더 라이브",
+    "holdSteady": "메뉴 항목을 고정하고 중앙에 정렬하기",
+    "capturedReady": "프레임 캡처 완료",
+    "capturePhoto": "사진 찍기",
+    "retake": "재응시",
+    "analyzeMenu": "분석 메뉴"
+  },
+  "processing": {
+    "title": "메뉴 사진 분석 중...",
+    "subtitle": "로컬 비전 AI를 활용한 처리",
+    "stepOcr": "시각적 레이아웃 및 타이포그래피 추출",
+    "stepRag": "정통 요리 프로필 검색",
+    "stepTranslation": "요리 이름과 미묘한 맛의 차이를 번역하기",
+    "stepSafety": "알레르기 유발 물질 및 식이 적합성 평가",
+    "cancel": "분석 취소"
+  },
+  "drawer": {
+    "title": "요리 상세 정보",
+    "original": "원제",
+    "translated": "번역된 이름",
+    "pronunciation": "발음",
+    "description": "설명 및 요리 특징",
+    "ingredients": "주요 성분",
+    "technique": "준비 방법",
+    "flavors": "맛의 특징",
+    "safety": "알레르기 유발 물질 및 식품 안전 감사",
+    "close": "닫기"
+  },
+  "offline": {
+    "offlineTitle": "백엔드 연결 끊김",
+    "offlineDesc": "포트 8001의 FastAPI 백엔드에 연결할 수 없습니다. 백엔드 서버가 실행 중인지 확인하십시오.",
+    "modelInit": "로컬 AI 비전 모델(qwen3-vl:8b)이 초기화 중입니다. 잠시만 기다려 주십시오.",
+    "refresh": "연결 새로 고침"
+  },
+  "errors": {
+    "retryAnalysis": "재시도 분석",
+    "dismiss": "오류 무시",
+    "unsupportedFile": "'{type}' 파일 형식은 지원되지 않습니다. JPEG, PNG 또는 WebP 형식의 사진을 업로드해 주세요.",
+    "fileTooLarge": "파일 크기가 너무 큽니다 ({size} MB). 허용되는 최대 업로드 크기는 {max} MB입니다.",
+    "pipelineTimeout": "분석 시간 초과: 로컬 모델이 이 이미지를 처리하는 데 너무 오랜 시간이 걸렸습니다. 사진을 똑바로 세우거나 더 선명한 메뉴 사진을 사용해 보세요.",
+    "modelUnavailable": "로컬 AI 비전 모델 서비스를 사용할 수 없습니다. Ollama가 실행 중인지 확인해 주세요('ollama serve').",
+    "invalidImage": "이미지를 디코딩할 수 없습니다. 유효한 JPEG, PNG 또는 WebP 형식의 메뉴 사진을 제공해 주세요.",
+    "networkError": "포트 8001에서 Menu Translator 백엔드에 연결할 수 없습니다. 백엔드 서비스가 실행 중인지 확인해 주십시오."
+  }
+}

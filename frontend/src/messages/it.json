@@ -1,0 +1,140 @@
+{
+  "header": {
+    "title": "Universal Menu Translator",
+    "badge": "Local AI Lens",
+    "subtitle": "Privacy-Preserving On-Device Vision & Culinary RAG",
+    "uiLanguage": "Website Language",
+    "targetLanguage": "Translate Menu To",
+    "scan": "Scan",
+    "upload": "Upload",
+    "reset": "Reset"
+  },
+  "hero": {
+    "pill": "Il tuo menu, nella tua lingua",
+    "headingPrefix": "Ogni menu,",
+    "headingHighlight": "Capito.",
+    "description": "Punta la fotocamera o carica una foto del menu. Universal Menu Translator decodifica le scritture straniere, svela le autentiche tecniche culinarie, spiega gli ingredienti e verifica la presenza di allergeni utilizzando un’intelligenza artificiale locale, al 100% privata e integrata nel dispositivo.",
+    "scanButton": "Scansiona con la fotocamera",
+    "uploadButton": "Carica foto dal menu",
+    "analyzingButton": "Analisi del menu...",
+    "rotateButton": "Ruota: {rotation}°",
+    "rotateTooltip": "Ruota l'orientamento della foto se è stata scattata in orizzontale",
+    "privacyBadge": "Modello di visione locale sul dispositivo, privato al 100% • Nessun dato inviato al cloud"
+  },
+  "demos": {
+    "tag": "Prova le demo istantanee",
+    "title": "Scopri i menu di tutto il mondo",
+    "description": "Prova il traduttore con un menu di esempio prima di caricare il tuo. Traduzione immediata, senza tempi di attesa.",
+    "cuisinesBadge": "6 cucine selezionate con cura",
+    "dishesCount": "{count} piatti autentici",
+    "offlineReady": "Pronto per l'uso offline",
+    "exploreMenu": "Explore Menu",
+    "instantDemo": "Instant Demo"
+  },
+  "preview": {
+    "adjustTitle": "Adjust Photo Orientation Before Scanning",
+    "rotate90": "Rotate 90° ({rotation}°)",
+    "cancel": "Cancel",
+    "extractButton": "Extract & Translate Menu ({rotation}° rotated)"
+  },
+  "dropzone": {
+    "activeTitle": "Drop your menu photo here",
+    "idleTitle": "Drop menu photo or click to browse",
+    "sub": "Supports JPG, PNG, WebP up to 15MB"
+  },
+  "dietary": {
+    "title": "Personal Dietary & Allergy Filter",
+    "subtitle": "Filter dishes against personal sensitivities",
+    "activeBadge": "{count} active",
+    "gluten": "Gluten-Free",
+    "dairy": "Dairy-Free",
+    "vegetarian": "Vegetarian",
+    "vegan": "Vegan",
+    "nut": "Senza frutta a guscio",
+    "shellfish": "Senza crostacei",
+    "halal": "Halal",
+    "kosher": "Kosher"
+  },
+  "steps": {
+    "tag": "Cenare senza pensieri",
+    "title": "Come funziona in tre passaggi",
+    "step1Title": "Acquisisci o carica",
+    "step1Desc": "Scatta una foto in qualsiasi condizione di luce. La rotazione di 90° consente di visualizzare i menu in orizzontale.",
+    "step2Title": "Filter & Translate",
+    "step2Desc": "Choose target language and set personal dietary restrictions.",
+    "step3Title": "Explore Safely",
+    "step3Desc": "Listen to authentic pronunciation and audit verified ingredient claims."
+  },
+  "results": {
+    "analyzedBadge": "Menu Translation Complete",
+    "dishesCount": "{count} dishes identified",
+    "tabStructured": "Structured Menu",
+    "tabOverlay": "Interactive Photo Overlay",
+    "searchPlaceholder": "Cerca piatti, ingredienti o allergeni...",
+    "allSections": "Tutte le sezioni",
+    "retranslating": "Traduzione in {language}...",
+    "safetyConflicts": "{count} Conflitti alimentari",
+    "details": "Dettagli",
+    "listen": "Ascolta",
+    "spiciness": "Piccantezza",
+    "allergens": "Allergeni",
+    "confidence": "Fiducia: {score}%",
+    "noDishesFound": "Nessun piatto corrisponde al tuo filtro",
+    "noDishesDesc": "Prova a cancellare la tua query di ricerca o i filtri relativi alle esigenze alimentari."
+  },
+  "camera": {
+    "viewfinderTitle": "Menu Fotocamera Mirino",
+    "viewfinderSub": "Allinea i piatti stampati e i prezzi all’interno della cornice",
+    "unavailableTitle": "Il segnale della telecamera non è disponibile",
+    "retry": "Riprova con la fotocamera",
+    "deviceCamera": "Fotocamera del dispositivo",
+    "uploadPhoto": "Upload Photo",
+    "waitingPermission": "In attesa dell'autorizzazione per l'uso della fotocamera...",
+    "initSensor": "Inizializzazione del sensore della fotocamera...",
+    "promptNotice": "Se il browser richiede l'autorizzazione per l'accesso alla fotocamera, clicca su \"Consenti\".",
+    "grantButton": "Concessione / Avvio videocamera",
+    "liveBadge": "Viewfinder Live",
+    "holdSteady": "Mantieni fissi e centrati gli elementi del menu",
+    "capturedReady": "Fotogramma acquisito - Pronto",
+    "capturePhoto": "Scatta una foto",
+    "retake": "Ripetere l'esame",
+    "analyzeMenu": "Menu \"Analizza\""
+  },
+  "processing": {
+    "title": "Analisi della foto del menu...",
+    "subtitle": "Elaborazione con l'IA visiva locale",
+    "stepOcr": "Estrazione del layout visivo e della tipografia",
+    "stepRag": "Ricerca di profili culinari autentici",
+    "stepTranslation": "Tradurre i piatti e le sfumature culinarie",
+    "stepSafety": "Verifica degli allergeni e della compatibilità alimentare",
+    "cancel": "Annulla analisi"
+  },
+  "drawer": {
+    "title": "Dettagli sul piatto",
+    "original": "Nome originale",
+    "translated": "Nome tradotto",
+    "pronunciation": "Pronuncia",
+    "description": "Descrizione e profilo culinario",
+    "ingredients": "Ingredienti principali",
+    "technique": "Tecnica di preparazione",
+    "flavors": "Note aromatiche",
+    "safety": "Verifica sulla sicurezza alimentare e sugli allergeni",
+    "close": "Chiudi"
+  },
+  "offline": {
+    "offlineTitle": "Backend disconnesso",
+    "offlineDesc": "Impossibile connettersi al backend FastAPI sulla porta 8001. Assicurati che il server backend sia in esecuzione.",
+    "modelInit": "Il modello di visione artificiale locale (qwen3-vl:8b) si sta avviando. Attendere, per favore.",
+    "refresh": "Aggiorna connessione"
+  },
+  "errors": {
+    "retryAnalysis": "Analisi dei tentativi successivi",
+    "dismiss": "Ignora l'errore",
+    "unsupportedFile": "Tipo di file non supportato \"{type}\". Carica una foto in formato JPEG, PNG o WebP.",
+    "fileTooLarge": "Il file è troppo grande ({size} MB). La dimensione massima consentita per il caricamento è {max} MB.",
+    "pipelineTimeout": "Timeout dell'analisi: il modello locale ha impiegato troppo tempo per elaborare questa immagine. Prova a orientare la foto in verticale o a utilizzare una foto del menu più nitida.",
+    "modelUnavailable": "Il servizio del modello di visione AI locale non è disponibile. Verifica che Ollama sia in esecuzione ('ollama serve').",
+    "invalidImage": "Impossibile decodificare l'immagine. Si prega di fornire una foto per il menu in formato JPEG, PNG o WebP valido.",
+    "networkError": "Impossibile connettersi al backend di Menu Translator sulla porta 8001. Verificare che il servizio backend sia in esecuzione."
+  }
+}

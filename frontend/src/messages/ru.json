@@ -1,0 +1,140 @@
+{
+  "header": {
+    "title": "Universal Menu Translator",
+    "badge": "Local AI Lens",
+    "subtitle": "Privacy-Preserving On-Device Vision & Culinary RAG",
+    "uiLanguage": "Website Language",
+    "targetLanguage": "Translate Menu To",
+    "scan": "Scan",
+    "upload": "Upload",
+    "reset": "Reset"
+  },
+  "hero": {
+    "pill": "Ваше меню на вашем языке",
+    "headingPrefix": "Каждое меню,",
+    "headingHighlight": "Понятно.",
+    "description": "Наведите камеру на меню или загрузите его фотографию. Приложение «Universal Menu Translator» расшифровывает иностранные тексты, раскрывает секреты традиционных кулинарных техник, объясняет состав блюд и проверяет наличие аллергенов с помощью локального ИИ, работающего на вашем устройстве и обеспечивающего 100% конфиденциальность.",
+    "scanButton": "Сканировать с помощью камеры",
+    "uploadButton": "Загрузить фотографию для меню",
+    "analyzingButton": "Анализ меню...",
+    "rotateButton": "Повернуть: {rotation}°",
+    "rotateTooltip": "Изменить ориентацию фотографии, если она была снята в горизонтальном положении",
+    "privacyBadge": "100 % частная локальная модель обработки изображений, работающая на устройстве • Данные в облако не передаются"
+  },
+  "demos": {
+    "tag": "Попробуйте мгновенные демо-версии",
+    "title": "Откройте для себя блюда со всего мира",
+    "description": "Попробуйте переводчик на примере меню, прежде чем загружать своё собственное. Мгновенный перевод, без ожидания.",
+    "cuisinesBadge": "6 избранных кулинарных направлений",
+    "dishesCount": "{count} традиционные блюда",
+    "offlineReady": "Готов к работе в автономном режиме",
+    "exploreMenu": "Explore Menu",
+    "instantDemo": "Instant Demo"
+  },
+  "preview": {
+    "adjustTitle": "Adjust Photo Orientation Before Scanning",
+    "rotate90": "Rotate 90° ({rotation}°)",
+    "cancel": "Cancel",
+    "extractButton": "Extract & Translate Menu ({rotation}° rotated)"
+  },
+  "dropzone": {
+    "activeTitle": "Drop your menu photo here",
+    "idleTitle": "Drop menu photo or click to browse",
+    "sub": "Supports JPG, PNG, WebP up to 15MB"
+  },
+  "dietary": {
+    "title": "Personal Dietary & Allergy Filter",
+    "subtitle": "Filter dishes against personal sensitivities",
+    "activeBadge": "{count} active",
+    "gluten": "Gluten-Free",
+    "dairy": "Dairy-Free",
+    "vegetarian": "Vegetarian",
+    "vegan": "Vegan",
+    "nut": "Без орехов",
+    "shellfish": "Без моллюсков",
+    "halal": "Халяль",
+    "kosher": "Кошерный"
+  },
+  "steps": {
+    "tag": "Удобный ужин",
+    "title": "Как это работает: три шага",
+    "step1Title": "Сделать снимок или загрузить",
+    "step1Desc": "Делайте снимки при любом освещении. Поворот на 90° позволяет просматривать меню в горизонтальной ориентации.",
+    "step2Title": "Filter & Translate",
+    "step2Desc": "Choose target language and set personal dietary restrictions.",
+    "step3Title": "Explore Safely",
+    "step3Desc": "Listen to authentic pronunciation and audit verified ingredient claims."
+  },
+  "results": {
+    "analyzedBadge": "Menu Translation Complete",
+    "dishesCount": "{count} dishes identified",
+    "tabStructured": "Structured Menu",
+    "tabOverlay": "Interactive Photo Overlay",
+    "searchPlaceholder": "Поиск блюд, ингредиентов или аллергенов...",
+    "allSections": "Все разделы",
+    "retranslating": "Перевод изображения {language}...",
+    "safetyConflicts": "{count} Пищевые конфликты",
+    "details": "Подробности",
+    "listen": "Слушайте",
+    "spiciness": "Острота",
+    "allergens": "Аллергены",
+    "confidence": "Уверенность: {score} %",
+    "noDishesFound": "По вашим критериям поиска не найдено ни одного блюда",
+    "noDishesDesc": "Попробуйте удалить поисковый запрос или снять фильтры по типу питания."
+  },
+  "camera": {
+    "viewfinderTitle": "Меню «Камера» «Видоискатель»",
+    "viewfinderSub": "Расположите напечатанные блюда и цены внутри рамки",
+    "unavailableTitle": "Видео с камеры недоступно",
+    "retry": "Повторить попытку с камерой",
+    "deviceCamera": "Камера устройства",
+    "uploadPhoto": "Upload Photo",
+    "waitingPermission": "Waiting for Camera Permission...",
+    "initSensor": "Инициализация датчика камеры...",
+    "promptNotice": "Пожалуйста, нажмите «Разрешить», если браузер запросит доступ к камере.",
+    "grantButton": "Грант / Включить камеру",
+    "liveBadge": "Видоискатель в режиме реального времени",
+    "holdSteady": "Выравнивать элементы меню по центру и фиксировать их положение",
+    "capturedReady": "Кадр снят, готов",
+    "capturePhoto": "Сделать снимок",
+    "retake": "Повторная сдача",
+    "analyzeMenu": "Меню «Анализ»"
+  },
+  "processing": {
+    "title": "Анализ фотографии в меню...",
+    "subtitle": "Обработка с помощью локального искусственного интеллекта для компьютерного зрения",
+    "stepOcr": "Извлечение визуальной верстки и типографики",
+    "stepRag": "Поиск аутентичных кулинарных рецептов",
+    "stepTranslation": "Перевод названий блюд и кулинарных нюансов",
+    "stepSafety": "Проверка на наличие аллергенов и диетическую совместимость",
+    "cancel": "Отменить анализ"
+  },
+  "drawer": {
+    "title": "Подробная информация о блюде",
+    "original": "Оригинальное название",
+    "translated": "Переведённое название",
+    "pronunciation": "Произношение",
+    "description": "Описание и кулинарные особенности",
+    "ingredients": "Основные ингредиенты",
+    "technique": "Техника приготовления",
+    "flavors": "Вкусовые характеристики",
+    "safety": "Аудит по аллергенам и безопасности питания",
+    "close": "Закрыть"
+  },
+  "offline": {
+    "offlineTitle": "Отключение бэкэнда",
+    "offlineDesc": "Не удается установить соединение с бэкендом FastAPI на порту 8001. Убедитесь, что сервер бэкенда работает.",
+    "modelInit": "Происходит инициализация локальной модели компьютерного зрения на базе ИИ (qwen3-vl:8b). Пожалуйста, подождите.",
+    "refresh": "Обновить соединение"
+  },
+  "errors": {
+    "retryAnalysis": "Анализ повторных попыток",
+    "dismiss": "Закрыть сообщение об ошибке",
+    "unsupportedFile": "Неподдерживаемый тип файла «{type}». Пожалуйста, загрузите фотографию в формате JPEG, PNG или WebP.",
+    "fileTooLarge": "Файл слишком велик ({size} МБ). Максимальный допустимый размер загружаемого файла составляет {max} МБ.",
+    "pipelineTimeout": "Истекло время ожидания анализа: локальной модели потребовалось слишком много времени для обработки этого изображения. Попробуйте повернуть фотографию в вертикальное положение или использовать снимок меню с более четким изображением.",
+    "modelUnavailable": "Служба локальной модели искусственного интеллекта для обработки изображений недоступна. Убедитесь, что Ollama запущена (команда «ollama serve»).",
+    "invalidImage": "Не удалось декодировать изображение. Пожалуйста, загрузите допустимое изображение для меню в формате JPEG, PNG или WebP.",
+    "networkError": "Не удается подключиться к бэкенду Menu Translator по порту 8001. Убедитесь, что служба бэкенда запущена."
+  }
+}

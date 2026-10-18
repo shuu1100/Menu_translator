@@ -1,0 +1,140 @@
+{
+  "header": {
+    "title": "Universal Menu Translator",
+    "badge": "Local AI Lens",
+    "subtitle": "Privacy-Preserving On-Device Vision & Culinary RAG",
+    "uiLanguage": "Website Language",
+    "targetLanguage": "Translate Menu To",
+    "scan": "Scan",
+    "upload": "Upload",
+    "reset": "Reset"
+  },
+  "hero": {
+    "pill": "قائمتك، بلغتك",
+    "headingPrefix": "كل قائمة،",
+    "headingHighlight": "فهمت.",
+    "description": "صوِّب الكاميرا أو قم بتحميل صورة لقائمة الطعام. يقوم تطبيق «Universal Menu Translator» بفك رموز النصوص الأجنبية، وكشف تقنيات الطهي الأصيلة، وشرح المكونات، والتحقق من مسببات الحساسية باستخدام ذكاء اصطناعي محلي يعمل على الجهاز ويحافظ على الخصوصية بنسبة 100%.",
+    "scanButton": "المسح ضوئيًا باستخدام الكاميرا",
+    "uploadButton": "تحميل صورة القائمة",
+    "analyzingButton": "تحليل القائمة...",
+    "rotateButton": "تدوير: {rotation} درجة",
+    "rotateTooltip": "قم بتدوير اتجاه الصورة إذا تم التقاطها بشكل أفقي",
+    "privacyBadge": "نموذج رؤية محلي خاص بنسبة 100% على الجهاز • لا يتم إرسال أي بيانات إلى السحابة"
+  },
+  "demos": {
+    "tag": "جرب العروض التوضيحية الفورية",
+    "title": "اكتشف أطباقًا من مختلف أنحاء العالم",
+    "description": "جرب المترجم باستخدام قائمة نموذجية قبل تحميل قائمتك الخاصة. الترجمة فورية، دون أي انتظار.",
+    "cuisinesBadge": "6 أنواع من المأكولات المختارة بعناية",
+    "dishesCount": "{count} أطباق أصيلة",
+    "offlineReady": "جاهز للعمل دون اتصال بالإنترنت",
+    "exploreMenu": "Explore Menu",
+    "instantDemo": "Instant Demo"
+  },
+  "preview": {
+    "adjustTitle": "Adjust Photo Orientation Before Scanning",
+    "rotate90": "Rotate 90° ({rotation}°)",
+    "cancel": "Cancel",
+    "extractButton": "Extract & Translate Menu ({rotation}° rotated)"
+  },
+  "dropzone": {
+    "activeTitle": "Drop your menu photo here",
+    "idleTitle": "Drop menu photo or click to browse",
+    "sub": "Supports JPG, PNG, WebP up to 15MB"
+  },
+  "dietary": {
+    "title": "Personal Dietary & Allergy Filter",
+    "subtitle": "Filter dishes against personal sensitivities",
+    "activeBadge": "{count} active",
+    "gluten": "Gluten-Free",
+    "dairy": "Dairy-Free",
+    "vegetarian": "Vegetarian",
+    "vegan": "Vegan",
+    "nut": "خالٍ من المكسرات",
+    "shellfish": "خالٍ من المحار",
+    "halal": "حلال",
+    "kosher": "كوشير"
+  },
+  "steps": {
+    "tag": "تجربة طعام مريحة",
+    "title": "كيف يعمل الأمر في ثلاث خطوات",
+    "step1Title": "التقاط أو تحميل",
+    "step1Desc": "التقط صورة في أي ظروف إضاءة. يدعم الدوران بزاوية 90 درجة عرض القوائم بشكل أفقي.",
+    "step2Title": "Filter & Translate",
+    "step2Desc": "Choose target language and set personal dietary restrictions.",
+    "step3Title": "Explore Safely",
+    "step3Desc": "Listen to authentic pronunciation and audit verified ingredient claims."
+  },
+  "results": {
+    "analyzedBadge": "Menu Translation Complete",
+    "dishesCount": "{count} dishes identified",
+    "tabStructured": "Structured Menu",
+    "tabOverlay": "Interactive Photo Overlay",
+    "searchPlaceholder": "ابحث عن الأطباق أو المكونات أو المواد المسببة للحساسية...",
+    "allSections": "جميع الأقسام",
+    "retranslating": "جاري الترجمة إلى {language}...",
+    "safetyConflicts": "{count} التضارب الغذائي",
+    "details": "التفاصيل",
+    "listen": "استمع",
+    "spiciness": "الحارة",
+    "allergens": "المواد المسببة للحساسية",
+    "confidence": "الثقة: {score}٪",
+    "noDishesFound": "لا توجد أطباق تتطابق مع معايير البحث التي حددتها",
+    "noDishesDesc": "حاول مسح استعلام البحث أو معايير التصفية المتعلقة بالنظام الغذائي."
+  },
+  "camera": {
+    "viewfinderTitle": "القائمة - عدسة الكاميرا",
+    "viewfinderSub": "قم بمحاذاة الأطباق المطبوعة والأسعار داخل الإطار",
+    "unavailableTitle": "بث الكاميرا غير متاح",
+    "retry": "إعادة محاولة تشغيل الكاميرا",
+    "deviceCamera": "كاميرا الجهاز",
+    "uploadPhoto": "Upload Photo",
+    "waitingPermission": "Waiting for Camera Permission...",
+    "initSensor": "جاري تهيئة مستشعر الكاميرا...",
+    "promptNotice": "يرجى النقر على «السماح» إذا طلب متصفحك الإذن بالوصول إلى الكاميرا.",
+    "grantButton": "منح / تشغيل الكاميرا",
+    "liveBadge": "مشاهد مباشر",
+    "holdSteady": "تثبيت عناصر القائمة وتوسيطها",
+    "capturedReady": "تم التقاط الإطار، جاهز",
+    "capturePhoto": "التقاط صورة",
+    "retake": "إعادة الامتحان",
+    "analyzeMenu": "قائمة التحليل"
+  },
+  "processing": {
+    "title": "جاري تحليل صورة القائمة...",
+    "subtitle": "المعالجة باستخدام تقنية الذكاء الاصطناعي البصري المحلية",
+    "stepOcr": "استخراج التخطيط المرئي والخطوط",
+    "stepRag": "الاطلاع على الملفات التعريفية الأصيلة الخاصة بالطهي",
+    "stepTranslation": "ترجمة الأطباق والفروق الدقيقة في فن الطهي",
+    "stepSafety": "فحص مسببات الحساسية والتوافق الغذائي",
+    "cancel": "إلغاء التحليل"
+  },
+  "drawer": {
+    "title": "تفاصيل الطبق",
+    "original": "الاسم الأصلي",
+    "translated": "الاسم المترجم",
+    "pronunciation": "النطق",
+    "description": "الوصف والخصائص الطهوية",
+    "ingredients": "المكونات الرئيسية",
+    "technique": "طريقة التحضير",
+    "flavors": "ملاحظات حول النكهة",
+    "safety": "تدقيق السلامة الغذائية والمواد المسببة للحساسية",
+    "close": "إغلاق"
+  },
+  "offline": {
+    "offlineTitle": "انقطاع الاتصال بالخادم الخلفي",
+    "offlineDesc": "يتعذر الاتصال بخادم FastAPI الخلفي على المنفذ 8001. تأكد من أن الخادم الخلفي قيد التشغيل.",
+    "modelInit": "يجري الآن تهيئة نموذج الرؤية المحلي القائم على الذكاء الاصطناعي (qwen3-vl:8b). يرجى الانتظار.",
+    "refresh": "تحديث الاتصال"
+  },
+  "errors": {
+    "retryAnalysis": "تحليل إعادة المحاولة",
+    "dismiss": "تجاهل الخطأ",
+    "unsupportedFile": "نوع الملف «{type}» غير مدعوم. يرجى تحميل صورة بتنسيق JPEG أو PNG أو WebP.",
+    "fileTooLarge": "حجم الملف كبير جدًّا ({size} ميغابايت). الحد الأقصى المسموح به لحجم الملف المراد تحميله هو {max} ميغابايت.",
+    "pipelineTimeout": "انتهت مهلة التحليل: استغرق النموذج المحلي وقتًا طويلاً جدًّا في معالجة هذه الصورة. حاول توجيه الصورة في الوضع الرأسي أو استخدام صورة أوضح للقائمة.",
+    "modelUnavailable": "خدمة نموذج الرؤية المحلي القائم على الذكاء الاصطناعي غير متاحة. يرجى التأكد من تشغيل Ollama (باستخدام الأمر «ollama serve»).",
+    "invalidImage": "تعذر فك تشفير الصورة. يرجى توفير صورة قائمة بصيغة JPEG أو PNG أو WebP صالحة.",
+    "networkError": "يتعذر الوصول إلى الخادم الخلفي لـ «Menu Translator» على المنفذ 8001. يرجى التأكد من أن الخدمة الخلفية قيد التشغيل."
+  }
+}

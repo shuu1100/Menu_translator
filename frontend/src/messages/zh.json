@@ -1,0 +1,140 @@
+{
+  "header": {
+    "title": "Universal Menu Translator",
+    "badge": "Local AI Lens",
+    "subtitle": "Privacy-Preserving On-Device Vision & Culinary RAG",
+    "uiLanguage": "Website Language",
+    "targetLanguage": "Translate Menu To",
+    "scan": "Scan",
+    "upload": "Upload",
+    "reset": "Reset"
+  },
+  "hero": {
+    "pill": "您的菜单，用您的语言呈现",
+    "headingPrefix": "每个菜单，",
+    "headingHighlight": "明白了。",
+    "description": "对准菜单拍照或上传菜单照片。Universal Menu Translator 通过 100% 私密的设备端本地 AI，可破译外文菜单、揭示地道烹饪技法、解释食材成分，并检测过敏原。",
+    "scanButton": "用相机扫描",
+    "uploadButton": "上传菜单照片",
+    "analyzingButton": "正在分析菜单...",
+    "rotateButton": "旋转：{rotation}°",
+    "rotateTooltip": "如果照片是在横向拍摄时拍摄的，请旋转照片方向",
+    "privacyBadge": "100% 私有、在设备端运行的本地视觉模型 • 零数据上传至云端"
+  },
+  "demos": {
+    "tag": "试用即时演示",
+    "title": "探索世界各地的美食菜单",
+    "description": "在上传您自己的菜单之前，请先用一份示例菜单试用一下翻译工具。即时翻译，无需等待。",
+    "cuisinesBadge": "6 种精选美食",
+    "dishesCount": "{count}地道菜肴",
+    "offlineReady": "支持离线使用",
+    "exploreMenu": "Explore Menu",
+    "instantDemo": "Instant Demo"
+  },
+  "preview": {
+    "adjustTitle": "Adjust Photo Orientation Before Scanning",
+    "rotate90": "Rotate 90° ({rotation}°)",
+    "cancel": "Cancel",
+    "extractButton": "Extract & Translate Menu ({rotation}° rotated)"
+  },
+  "dropzone": {
+    "activeTitle": "Drop your menu photo here",
+    "idleTitle": "Drop menu photo or click to browse",
+    "sub": "Supports JPG, PNG, WebP up to 15MB"
+  },
+  "dietary": {
+    "title": "Personal Dietary & Allergy Filter",
+    "subtitle": "Filter dishes against personal sensitivities",
+    "activeBadge": "{count} active",
+    "gluten": "Gluten-Free",
+    "dairy": "Dairy-Free",
+    "vegetarian": "Vegetarian",
+    "vegan": "Vegan",
+    "nut": "不含坚果",
+    "shellfish": "不含贝类",
+    "halal": "清真",
+    "kosher": "犹太洁食"
+  },
+  "steps": {
+    "tag": "轻松用餐",
+    "title": "三步操作指南",
+    "step1Title": "拍摄或上传",
+    "step1Desc": "无论光线如何，都能轻松拍摄照片。90°旋转功能可解决菜单横向显示的问题。",
+    "step2Title": "Filter & Translate",
+    "step2Desc": "Choose target language and set personal dietary restrictions.",
+    "step3Title": "Explore Safely",
+    "step3Desc": "Listen to authentic pronunciation and audit verified ingredient claims."
+  },
+  "results": {
+    "analyzedBadge": "Menu Translation Complete",
+    "dishesCount": "{count} dishes identified",
+    "tabStructured": "Structured Menu",
+    "tabOverlay": "Interactive Photo Overlay",
+    "searchPlaceholder": "搜索菜肴、食材或致敏原……",
+    "allSections": "所有栏目",
+    "retranslating": "正在转换为 {language}...",
+    "safetyConflicts": "{count} 食物冲突",
+    "details": "详情",
+    "listen": "收听",
+    "spiciness": "辣度",
+    "allergens": "过敏原",
+    "confidence": "信心：{score}%",
+    "noDishesFound": "没有符合您筛选条件的餐具",
+    "noDishesDesc": "请尝试清除搜索词或饮食筛选条件。"
+  },
+  "camera": {
+    "viewfinderTitle": "菜单 相机 取景器",
+    "viewfinderSub": "将印有菜品和价格的餐盘在画框内对齐",
+    "unavailableTitle": "摄像头画面无法显示",
+    "retry": "重新尝试摄像头",
+    "deviceCamera": "设备摄像头",
+    "uploadPhoto": "Upload Photo",
+    "waitingPermission": "Waiting for Camera Permission...",
+    "initSensor": "正在初始化摄像头传感器...",
+    "promptNotice": "如果浏览器提示需要访问摄像头，请点击“允许”。",
+    "grantButton": "格兰特 / 启动摄像头",
+    "liveBadge": "取景器直播",
+    "holdSteady": "使菜单项保持固定并居中",
+    "capturedReady": "已捕获帧，准备就绪",
+    "capturePhoto": "拍摄照片",
+    "retake": "重考",
+    "analyzeMenu": "“分析”菜单"
+  },
+  "processing": {
+    "title": "正在分析菜单图片...",
+    "subtitle": "使用本地视觉AI进行处理",
+    "stepOcr": "提取视觉布局与排版",
+    "stepRag": "获取地道的美食介绍",
+    "stepTranslation": "菜肴及烹饪细节的翻译",
+    "stepSafety": "过敏原与饮食兼容性审核",
+    "cancel": "取消分析"
+  },
+  "drawer": {
+    "title": "菜品详情",
+    "original": "原名",
+    "translated": "译名",
+    "pronunciation": "发音",
+    "description": "描述与烹饪特点",
+    "ingredients": "主要成分",
+    "technique": "制备方法",
+    "flavors": "风味描述",
+    "safety": "过敏原与膳食安全审核",
+    "close": "关闭"
+  },
+  "offline": {
+    "offlineTitle": "后端已断开连接",
+    "offlineDesc": "无法连接到端口 8001 上的 FastAPI 后端。请确保后端服务器正在运行。",
+    "modelInit": "本地 AI 视觉模型（qwen3-vl:8b）正在初始化。请稍候。",
+    "refresh": "刷新连接"
+  },
+  "errors": {
+    "retryAnalysis": "重试分析",
+    "dismiss": "忽略错误",
+    "unsupportedFile": "不支持文件类型“{type}”。请上传 JPEG、PNG 或 WebP 格式的照片。",
+    "fileTooLarge": "文件过大（{size} MB）。允许上传的最大文件大小为 {max} MB。",
+    "pipelineTimeout": "分析超时：本地模型处理此图片耗时过长。请尝试将照片调整为直立方向，或使用更清晰的菜单截图。",
+    "modelUnavailable": "本地 AI 视觉模型服务不可用。请确认 Ollama 是否正在运行（'ollama serve'）。",
+    "invalidImage": "无法解码图片。请提供一张有效的 JPEG、PNG 或 WebP 格式的菜单图片。",
+    "networkError": "无法通过端口 8001 连接到 Menu Translator 后端。请确认后端服务是否正在运行。"
+  }
+}

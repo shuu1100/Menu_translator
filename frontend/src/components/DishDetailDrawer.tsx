@@ -3,6 +3,7 @@
 import React, { useEffect, useSyncExternalStore, useState } from "react";
 import { AnalyzedDish } from "../types/menu";
 import { DishImage } from "./DishImage";
+import { useTranslation } from "../i18n/I18nContext";
 import {
   X,
   ShieldAlert,
@@ -34,6 +35,7 @@ export const DishDetailDrawer: React.FC<DishDetailDrawerProps> = ({
   hasNext = false,
   hasPrev = false,
 }) => {
+  const { t } = useTranslation();
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
 
   const hasSpeech = useSyncExternalStore(
@@ -183,14 +185,14 @@ export const DishDetailDrawer: React.FC<DishDetailDrawerProps> = ({
               type="button"
               onClick={playPronunciation}
               disabled={!hasSpeech}
-              title="Listen to native pronunciation"
+              title={t("results.listen")}
               className="w-10 h-10 rounded-full bg-[#C74735] hover:bg-[#A93629] text-white flex items-center justify-center shadow-sm active:scale-95 transition-all shrink-0 cursor-pointer disabled:opacity-50"
             >
               <Volume2 className={`w-5 h-5 ${isPlayingAudio ? "animate-bounce" : ""}`} />
             </button>
             <div className="flex flex-col truncate">
               <span className="text-[11px] font-bold text-[#695C53] uppercase tracking-wider">
-                Native Pronunciation
+                {t("drawer.pronunciation")}
               </span>
               <span className="text-sm font-semibold text-[#1F1B18] truncate mt-0.5">
                 {dish.transliteration || dish.phonetic_transcription
@@ -212,7 +214,7 @@ export const DishDetailDrawer: React.FC<DishDetailDrawerProps> = ({
         {/* Authentic Original Scanned Snippet */}
         <div className="w-full bg-[#F5ECE7] border border-[#EADFD5] rounded-2xl p-3.5 flex flex-col gap-1.5">
           <span className="text-[10px] uppercase font-bold text-[#695C53] tracking-wider">
-            Original Scanned Menu Text:
+            {t("drawer.original")}:
           </span>
           <p className="text-base font-semibold text-[#1F1B18]">
             {dish.original_name || dish.original_text}
@@ -230,7 +232,7 @@ export const DishDetailDrawer: React.FC<DishDetailDrawerProps> = ({
           <div className="flex flex-col gap-1.5 p-4 rounded-2xl bg-[#FBF2ED] border border-[#EADFD5]">
             <h4 className="text-xs font-bold text-[#58413D] uppercase tracking-wider flex items-center gap-1.5">
               <Utensils className="w-3.5 h-3.5 text-[#C74735]" />
-              Translated Description
+              {t("drawer.description")}
             </h4>
             <p className="text-xs sm:text-sm text-[#1F1B18] leading-relaxed">
               {dish.translated_description || dish.culinary_description}
@@ -238,7 +240,7 @@ export const DishDetailDrawer: React.FC<DishDetailDrawerProps> = ({
           </div>
         ) : (
           <div className="p-3.5 rounded-xl bg-[#F5ECE7]/60 border border-[#EADFD5] text-xs text-[#695C53] italic">
-            No description provided on the menu
+            {t("results.noDescription") || "No description provided on the menu"}
           </div>
         )}
 
@@ -247,7 +249,7 @@ export const DishDetailDrawer: React.FC<DishDetailDrawerProps> = ({
           <div className="flex flex-col gap-1.5 p-4 rounded-2xl bg-[#F2DFD3]/40 border border-[#C74735]/20">
             <h4 className="text-xs font-bold text-[#A52F20] uppercase tracking-wider flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5 text-[#C74735]" />
-              Culinary Context & Recipe Notes
+              {t("results.aiExplanation") || "AI Dish Explanation:"}
             </h4>
             <p className="text-xs sm:text-sm text-[#1F1B18] leading-relaxed">
               {dish.generated_description}
@@ -258,7 +260,7 @@ export const DishDetailDrawer: React.FC<DishDetailDrawerProps> = ({
         {/* Flavor Profile */}
         {dish.flavor_profile && (
           <div className="flex flex-col gap-1 p-3 rounded-xl bg-white border border-[#EADFD5]">
-            <span className="text-[10px] font-bold text-[#695C53] uppercase tracking-wider">Flavor Profile</span>
+            <span className="text-[10px] font-bold text-[#695C53] uppercase tracking-wider">{t("drawer.flavors")}</span>
             <p className="text-xs text-[#1F1B18] font-medium italic">
               &ldquo;{dish.flavor_profile}&rdquo;
             </p>
@@ -270,7 +272,7 @@ export const DishDetailDrawer: React.FC<DishDetailDrawerProps> = ({
           <div className="flex items-center justify-between">
             <h4 className="text-xs font-bold text-[#58413D] uppercase tracking-wider flex items-center gap-1.5">
               <CheckCircle2 className="w-3.5 h-3.5 text-[#166742]" />
-              Ingredients
+              {t("drawer.ingredients")}
             </h4>
             {dish.ingredient_evidence_status === "confirmed" ? (
               <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#EAF5EE] text-[#166742] border border-[#B2DEC4]">

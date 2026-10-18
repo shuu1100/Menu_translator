@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Check, RotateCw, Sparkles, Image as ImageIcon, X } from "lucide-react";
+import { useTranslation } from "../i18n/I18nContext";
 
 interface ProcessingOverlayProps {
   onCancel?: () => void;
@@ -49,6 +50,7 @@ const PIPELINE_STEPS: StepInfo[] = [
 ];
 
 export const ProcessingOverlay: React.FC<ProcessingOverlayProps> = ({ onCancel, imageUrl }) => {
+  const { t } = useTranslation();
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [elapsedSecs, setElapsedSecs] = useState(0);
 
@@ -105,10 +107,10 @@ export const ProcessingOverlay: React.FC<ProcessingOverlayProps> = ({ onCancel, 
 
             <div className="flex flex-col min-w-0">
               <span className="text-[11px] font-bold text-[#A52F20] uppercase tracking-wider">
-                Decoding In Progress
+                {t("processing.title")}
               </span>
               <h3 className="text-base font-bold text-[#1F1B18] truncate mt-0.5">
-                Local Vision Analysis
+                {t("processing.subtitle")}
               </h3>
               <div className="flex items-center gap-2 mt-1">
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#F2DFD3] text-[#A52F20] text-xs font-semibold">
@@ -125,7 +127,8 @@ export const ProcessingOverlay: React.FC<ProcessingOverlayProps> = ({ onCancel, 
               type="button"
               onClick={onCancel}
               className="p-2 rounded-full text-[#695C53] hover:text-[#1F1B18] hover:bg-[#F5ECE7] transition-colors"
-              aria-label="Cancel analysis"
+              aria-label={t("processing.cancel")}
+              title={t("processing.cancel")}
             >
               <X className="w-5 h-5" />
             </button>
@@ -206,7 +209,7 @@ export const ProcessingOverlay: React.FC<ProcessingOverlayProps> = ({ onCancel, 
         {/* Footer Guarantee */}
         <div className="flex items-center justify-center gap-2 pt-1 border-t border-[#EADFD5]/60 text-xs text-[#58413D] z-10">
           <Sparkles className="w-3.5 h-3.5 text-[#C74735]" />
-          <span>On-device Ollama inference • Zero cloud API transmission</span>
+          <span>{t("hero.privacyBadge")}</span>
         </div>
       </div>
     </div>
